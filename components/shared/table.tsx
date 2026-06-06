@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,8 @@ interface TableProps<T> {
   rows: T[];
   getRowKey: (row: T) => string;
   emptyState?: ReactNode;
+  expandedRowIds?: string[];
+  renderExpandedRow?: (row: T) => ReactNode;
 }
 
 export function Table<T>({
@@ -23,6 +25,8 @@ export function Table<T>({
   rows,
   getRowKey,
   emptyState,
+  expandedRowIds,
+  renderExpandedRow,
 }: TableProps<T>) {
   return (
     <div className="overflow-x-auto">
@@ -50,16 +54,25 @@ export function Table<T>({
             </tr>
           ) : (
             rows.map((row) => (
-              <tr key={getRowKey(row)}>
-                {columns.map((column) => (
-                  <td
-                    key={column.id}
-                    className={cn("border-b px-4 py-3 text-sm", column.className)}
-                  >
-                    {column.cell(row)}
-                  </td>
-                ))}
-              </tr>
+              <Fragment key={getRowKey(row)}>
+                <tr>
+                  {columns.map((column) => (
+                    <td
+                      key={column.id}
+                      className={cn("border-b px-4 py-3 text-sm", column.className)}
+                    >
+                      {column.cell(row)}
+                    </td>
+                  ))}
+                </tr>
+                {expandedRowIds?.includes(getRowKey(row)) && renderExpandedRow ? (
+                  <tr>
+                    <td colSpan={columns.length} className="border-b px-4 py-3 text-sm">
+                      {renderExpandedRow(row)}
+                    </td>
+                  </tr>
+                ) : null}
+              </Fragment>
             ))
           )}
         </tbody>
