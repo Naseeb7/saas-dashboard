@@ -6,4 +6,8 @@ export interface User {
   company: string;
   location: string;
   initials: string;
+  companyWebsite?: string;
+  companyLocation?: string;
+  companyHeadcount?: string;
+  managementLevel?: string;
 }

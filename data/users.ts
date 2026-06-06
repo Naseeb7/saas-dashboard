@@ -50,6 +50,10 @@ export const peopleDirectory: User[] = [
     company: "Northstar AI",
     location: "San Francisco, USA",
     initials: "SC",
+    companyWebsite: "northstar.ai",
+    companyLocation: "north-america",
+    companyHeadcount: "201-500",
+    managementLevel: "vp",
   },
   {
     id: "person-002",
@@ -59,6 +63,10 @@ export const peopleDirectory: User[] = [
     company: "Lighthouse",
     location: "Austin, USA",
     initials: "DF",
+    companyWebsite: "lighthouse.co",
+    companyLocation: "north-america",
+    companyHeadcount: "51-200",
+    managementLevel: "director",
   },
   {
     id: "person-003",
@@ -68,6 +76,10 @@ export const peopleDirectory: User[] = [
     company: "Vertex Cloud",
     location: "London, UK",
     initials: "AS",
+    companyWebsite: "vertexcloud.com",
+    companyLocation: "europe",
+    companyHeadcount: "11-50",
+    managementLevel: "director",
   },
   {
     id: "person-004",
@@ -77,6 +89,10 @@ export const peopleDirectory: User[] = [
     company: "Orbit Health",
     location: "New York, USA",
     initials: "EB",
+    companyWebsite: "orbithealth.com",
+    companyLocation: "north-america",
+    companyHeadcount: "1-10",
+    managementLevel: "c-level",
   },
   {
     id: "person-005",
@@ -86,5 +102,9 @@ export const peopleDirectory: User[] = [
     company: "FinFlow",
     location: "Bengaluru, India",
     initials: "PN",
+    companyWebsite: "finflow.in",
+    companyLocation: "apac",
+    companyHeadcount: "201-500",
+    managementLevel: "manager",
   },
 ];

@@ -57,7 +57,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0"
+      className="fixed inset-0 bg-black/30"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onOpenChange(false);
@@ -69,7 +69,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="w-full max-w-lg border"
+          className="w-full max-w-5xl border bg-black"
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
@@ -88,7 +88,9 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
               Close
             </button>
           </div>
-          <div>{children}</div>
+          <div className="max-h-[calc(100vh-6rem)] overflow-y-auto">
+            {children}
+          </div>
         </div>
       </div>
     </div>
