@@ -3,7 +3,11 @@
 import { useState } from "react";
 
 import { DataGrid } from "@/components/dashboard/data-grid";
-import { GridToolbar, type GridTab, type GridViewMode } from "@/components/dashboard/grid-toolbar";
+import {
+  GridToolbar,
+  type GridTab,
+  type GridViewMode,
+} from "@/components/dashboard/grid-toolbar";
 import { LatestUpdateCard } from "@/components/dashboard/latest-update-card";
 import { ProgressCard } from "@/components/dashboard/progress-card";
 import { AppShell } from "@/components/layout/app-shell";
@@ -12,6 +16,7 @@ import { Button } from "@/components/shared/button";
 import { gridItems } from "@/data/grid-items";
 import { currentUser } from "@/data/users";
 import type { GridItem } from "@/types/grid";
+import { Building, User } from "lucide-react";
 
 export default function Home() {
   const [isFindPeopleOpen, setIsFindPeopleOpen] = useState(false);
@@ -21,7 +26,9 @@ export default function Home() {
   const [favoriteMap, setFavoriteMap] = useState<Record<string, boolean>>(() =>
     createFavoriteMap(gridItems),
   );
-  const [expandedRowId, setExpandedRowId] = useState<string | null>(gridItems[0]?.id ?? null);
+  const [expandedRowId, setExpandedRowId] = useState<string | null>(
+    gridItems[0]?.id ?? null,
+  );
 
   const visibleRows = gridItems.filter((row) => {
     if (activeTab === "starred" && !favoriteMap[row.id]) {
@@ -43,25 +50,34 @@ export default function Home() {
   return (
     <>
       <AppShell>
-        <section aria-label="Dashboard content" className="space-y-4 p-4 lg:p-6">
-          <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-1">
-              <p className="text-sm">Welcome back, {currentUser.name}</p>
-              <p>Here&apos;s your daily scoop on Bitscale!</p>
+        <section
+          aria-label="Dashboard content"
+          className="flex flex-col gap-6 p-5.25"
+        >
+          <header className="flex justify-between">
+            <div className="flex flex-col gap-1">
+              <p className="text-lg font-semibold text-black-100">
+                Welcome back, {currentUser.name}!
+              </p>
+              <p className="text-gray-500">
+                Here&apos;s your daily scoop on Bitscale!
+              </p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="secondary" size="md">
+            <div className="flex flex-wrap gap-2 items-center">
+              <Button
+                type="button"
+                leftIcon={<Building size={16} className="text-green-200" />}
+              >
                 Find Companies
               </Button>
               <Button
                 type="button"
-                variant="secondary"
-                size="md"
+                leftIcon={<User size={16} className="text-purple-100" />}
                 onClick={() => setIsFindPeopleOpen(true)}
               >
                 Find People
               </Button>
-              <Button type="button" variant="primary" size="md">
+              <Button type="button" variant="secondary">
                 New Grid
               </Button>
             </div>
@@ -97,7 +113,10 @@ export default function Home() {
           />
         </section>
       </AppShell>
-      <FindPeopleModal open={isFindPeopleOpen} onOpenChange={setIsFindPeopleOpen} />
+      <FindPeopleModal
+        open={isFindPeopleOpen}
+        onOpenChange={setIsFindPeopleOpen}
+      />
     </>
   );
 }

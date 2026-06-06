@@ -251,7 +251,7 @@ function SidebarNavLink({
       className={cn(
         "flex items-center gap-2 rounded-lg p-2 text-sm w-full justify-between",
         disabled && "text-gray-400",
-        active ? "font-medium text-blue-700 bg-gray-100" : "font-normal",
+        active ? "font-medium text-blue-100 bg-gray-100" : "font-normal",
         collapsed && "justify-center px-2",
       )}
     >
