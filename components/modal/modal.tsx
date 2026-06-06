@@ -69,7 +69,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="w-full max-w-5xl border bg-black"
+          className="flex h-[min(90vh,calc(100vh-2rem))] w-full max-w-5xl flex-col overflow-hidden border bg-black"
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
@@ -88,7 +88,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
               Close
             </button>
           </div>
-          <div className="max-h-[calc(100vh-6rem)] overflow-y-auto">
+          <div className="flex-1 min-h-0">
             {children}
           </div>
         </div>

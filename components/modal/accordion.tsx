@@ -2,6 +2,9 @@
 
 import type { ReactNode } from "react";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 interface AccordionProps<T> {
   items: T[];
@@ -21,7 +24,7 @@ export function Accordion<T>({
   renderItem,
 }: AccordionProps<T>) {
   const [openItemIds, setOpenItemIds] = useState<Set<string>>(
-    () => new Set(defaultOpenIds ?? items.map(getItemId)),
+    () => new Set(defaultOpenIds ?? []),
   );
 
   const toggleItem = (itemId: string) => {
@@ -56,18 +59,20 @@ export function Accordion<T>({
                 className="flex w-full items-center justify-between gap-4 p-4 text-left"
               >
                 <span className="min-w-0">
-                  <span className="block text-sm font-medium">
-                    {getItemTitle(item)}
-                  </span>
+                  <span className="block text-sm font-medium">{getItemTitle(item)}</span>
                   {getItemDescription ? (
                     <span className="block text-xs">{getItemDescription(item)}</span>
                   ) : null}
                 </span>
-                <span aria-hidden="true">{isOpen ? "-" : "+"}</span>
+                <ChevronDown
+                  aria-hidden="true"
+                  size={14}
+                  className={cn("shrink-0 transition-transform", isOpen && "rotate-180")}
+                />
               </button>
             </h3>
             {isOpen ? (
-              <div id={panelId} role="region" aria-labelledby={buttonId} className="p-4">
+              <div id={panelId} role="region" aria-labelledby={buttonId} className="p-4 pt-0">
                 {renderItem(item)}
               </div>
             ) : null}

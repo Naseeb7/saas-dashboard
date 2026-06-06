@@ -12,7 +12,7 @@ import { peopleDirectory } from "@/data/users";
 import type { FilterConfig, FilterSection } from "@/types/filters";
 import type { User } from "@/types/user";
 
-type FilterValue = string | string[];
+type FilterValue = string[];
 type FilterState = Record<string, FilterValue>;
 
 interface FindPeopleModalProps {
@@ -60,34 +60,12 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
   const [keywordQuery, setKeywordQuery] = useState("");
   const [filters, setFilters] = useState<FilterState>({});
 
-  const selectedValueCount = Object.values(filters).reduce((count, value) => {
-    if (Array.isArray(value)) {
-      return count + value.length;
-    }
-
-    return value.trim() ? count + 1 : count;
-  }, 0);
+  const selectedValueCount = Object.values(filters).reduce(
+    (count, value) => count + value.length,
+    0,
+  );
 
   const keyword = keywordQuery.trim().toLowerCase();
-
-  const selectedLocations = Array.isArray(filters["person-location"])
-    ? filters["person-location"]
-    : [];
-
-  const selectedManagementLevel =
-    typeof filters["management-level"] === "string"
-      ? filters["management-level"]
-      : "";
-
-  const selectedCompanyLocation =
-    typeof filters["company-location"] === "string"
-      ? filters["company-location"]
-      : "";
-
-  const selectedCompanyHeadcount =
-    typeof filters["company-headcount"] === "string"
-      ? filters["company-headcount"]
-      : "";
 
   const filteredPeople = peopleDirectory.filter((person) => {
     const keywordMatches =
@@ -97,68 +75,52 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
         .toLowerCase()
         .includes(keyword);
 
-    const jobTitleValue =
-      typeof filters["job-title"] === "string" ? filters["job-title"].trim().toLowerCase() : "";
-    const companyWebsiteValue =
-      typeof filters["company-website"] === "string"
-        ? filters["company-website"].trim().toLowerCase()
-        : "";
+    const jobTitleValues = filters["job-title"] ?? [];
+    const companyWebsiteValues = filters["company-website"] ?? [];
+    const selectedPersonLocations = filters["person-location"] ?? [];
+    const selectedCompanyLocations = filters["company-location"] ?? [];
+    const selectedCompanyHeadcounts = filters["company-headcount"] ?? [];
+    const selectedManagementLevels = filters["management-level"] ?? [];
 
     const jobTitleMatches =
-      jobTitleValue.length === 0 || person.role.toLowerCase().includes(jobTitleValue);
+      jobTitleValues.length === 0 || jobTitleValues.includes(person.role.toLowerCase());
 
     const companyWebsiteMatches =
-      companyWebsiteValue.length === 0 ||
-      (person.companyWebsite ?? "").toLowerCase().includes(companyWebsiteValue) ||
-      person.company.toLowerCase().includes(companyWebsiteValue);
+      companyWebsiteValues.length === 0 ||
+      companyWebsiteValues.includes((person.companyWebsite ?? "").toLowerCase());
 
     const locationMatches =
-      selectedLocations.length === 0 || selectedLocations.includes(person.location);
-
-    const managementLevelMatches =
-      selectedManagementLevel.length === 0 ||
-      person.managementLevel === selectedManagementLevel;
+      selectedPersonLocations.length === 0 || selectedPersonLocations.includes(person.location);
 
     const companyLocationMatches =
-      selectedCompanyLocation.length === 0 ||
-      person.companyLocation === selectedCompanyLocation;
+      selectedCompanyLocations.length === 0 ||
+      selectedCompanyLocations.includes(person.companyLocation ?? "");
 
     const companyHeadcountMatches =
-      selectedCompanyHeadcount.length === 0 ||
-      person.companyHeadcount === selectedCompanyHeadcount;
+      selectedCompanyHeadcounts.length === 0 ||
+      selectedCompanyHeadcounts.includes(person.companyHeadcount ?? "");
+
+    const managementLevelMatches =
+      selectedManagementLevels.length === 0 ||
+      selectedManagementLevels.includes(person.managementLevel ?? "");
 
     return (
       keywordMatches &&
       jobTitleMatches &&
       companyWebsiteMatches &&
       locationMatches &&
-      managementLevelMatches &&
       companyLocationMatches &&
-      companyHeadcountMatches
+      companyHeadcountMatches &&
+      managementLevelMatches
     );
   });
 
-  const showEmptyState = keyword.length > 0 || selectedValueCount > 0
-    ? filteredPeople.length === 0
-    : false;
-
-  const setTextFilter = (filterId: string, value: string) => {
-    setFilters((current) => ({
-      ...current,
-      [filterId]: value,
-    }));
-  };
-
-  const setSelectFilter = (filterId: string, value: string) => {
-    setFilters((current) => ({
-      ...current,
-      [filterId]: value,
-    }));
-  };
+  const showEmptyState =
+    keyword.length > 0 || selectedValueCount > 0 ? filteredPeople.length === 0 : false;
 
   const toggleMultiSelectValue = (filterId: string, value: string) => {
     setFilters((current) => {
-      const existingValues = Array.isArray(current[filterId]) ? current[filterId] : [];
+      const existingValues = current[filterId] ?? [];
       const nextValues = existingValues.includes(value)
         ? existingValues.filter((entry) => entry !== value)
         : [...existingValues, value];
@@ -172,7 +134,7 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
 
   return (
     <Modal open={open} onOpenChange={onOpenChange} title="Find People">
-      <div className="space-y-4 p-4">
+      <div className="flex h-full min-h-0 flex-col p-4">
         <header className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex flex-wrap items-center gap-3">
             <h2 className="text-lg font-medium">Find People</h2>
@@ -180,7 +142,7 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
               type="button"
               variant="ghost"
               size="sm"
-              rightIcon={<ChevronDown size={14} />}
+              rightIcon={<ChevronDown size={14} aria-hidden="true" />}
             >
               Saved Search
             </Button>
@@ -196,168 +158,116 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
           </div>
         </header>
 
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 py-4">
           <p className="text-sm">
             Found {filteredPeople.length} people. Click preview to view results.
           </p>
           <p className="text-sm">Import people from saved search or apply filters.</p>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
-          <aside className="space-y-4">
-            <section aria-labelledby="keyword-heading" className="space-y-2 rounded border p-4">
-              <h3 id="keyword-heading" className="text-sm font-medium">
-                People Keyword
-              </h3>
-              <label className="flex items-center gap-2 rounded border px-3 py-2">
-                <Search size={14} aria-hidden="true" />
-                <span className="sr-only">Search keyword</span>
-                <input
-                  type="search"
-                  value={keywordQuery}
-                  onChange={(event) => setKeywordQuery(event.target.value)}
-                  placeholder="Enter single keyword here..."
-                  className="min-w-0 flex-1 bg-transparent text-sm outline-none"
-                />
-              </label>
-            </section>
+        <div className="grid min-h-0 flex-1 gap-4 grid-rows-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-rows-none lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
+          <aside className="flex min-h-0 flex-col overflow-hidden">
+            <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pr-2">
+              <section aria-labelledby="keyword-heading" className="space-y-2 rounded border p-4">
+                <h3 id="keyword-heading" className="text-sm font-medium">
+                  People Keyword
+                </h3>
+                <label className="flex items-center gap-2 rounded border px-3 py-2">
+                  <Search size={14} aria-hidden="true" />
+                  <span className="sr-only">Search keyword</span>
+                  <input
+                    type="search"
+                    value={keywordQuery}
+                    onChange={(event) => setKeywordQuery(event.target.value)}
+                    placeholder="Enter single keyword here..."
+                    className="min-w-0 flex-1 bg-transparent text-sm outline-none"
+                  />
+                </label>
+              </section>
 
-            <Accordion<FilterSection>
-              items={filterSections}
-              defaultOpenIds={filterSections.map((section) => section.id)}
-              getItemId={(section) => section.id}
-              getItemTitle={(section) => section.title}
-              getItemDescription={(section) => section.description}
-              renderItem={(section) => (
-                <div className="space-y-4">
-                  {section.filters.map((filter) => (
-                    <FilterControl
-                      key={filter.id}
-                      filter={filter}
-                      value={filters[filter.id]}
-                      onTextChange={setTextFilter}
-                      onSelectChange={setSelectFilter}
-                      onMultiSelectToggle={toggleMultiSelectValue}
-                    />
-                  ))}
-                </div>
-              )}
-            />
-
-            <footer className="flex flex-wrap items-center gap-3">
-              <Button type="button" variant="secondary" size="md">
-                Save Search
-              </Button>
-              <Button type="button" variant="primary" size="md">
-                Preview Result
-              </Button>
-            </footer>
+              <Accordion<FilterSection>
+                items={filterSections}
+                getItemId={(section) => section.id}
+                getItemTitle={(section) => section.title}
+                getItemDescription={(section) => section.description}
+                renderItem={(section) => (
+                  <div className="space-y-3">
+                    {section.filters.map((filter) => (
+                      <FilterOptions
+                        key={filter.id}
+                        filter={filter}
+                        selectedValues={filters[filter.id] ?? []}
+                        onToggleValue={toggleMultiSelectValue}
+                      />
+                    ))}
+                  </div>
+                )}
+              />
+            </div>
           </aside>
 
-          <section aria-labelledby="preview-heading" className="space-y-4 rounded border p-4">
-            <header className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <h3 id="preview-heading" className="text-sm font-medium">
-                  Preview
-                </h3>
-                <p className="text-sm">
-                  Results table area for the current filter combination.
-                </p>
-              </div>
-              <p className="text-sm" aria-label="results count">
-                {filteredPeople.length} results
-              </p>
-            </header>
-
-            {showEmptyState ? (
-              <div className="flex min-h-64 items-center justify-center border p-6">
-                <div className="text-center">
-                  <div
-                    aria-hidden="true"
-                    className="mx-auto mb-4 h-16 w-16 rounded border"
-                  />
-                  <p className="text-sm">No matching users.</p>
+          <section aria-labelledby="preview-heading" className="flex min-h-0 flex-col overflow-hidden">
+            <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pl-2">
+              <header className="flex flex-wrap items-start justify-between gap-3 rounded border p-4">
+                <div>
+                  <h3 id="preview-heading" className="text-sm font-medium">
+                    Preview
+                  </h3>
+                  <p className="text-sm">
+                    Results table area for the current filter combination.
+                  </p>
                 </div>
-              </div>
-            ) : (
-              <Table
-                caption="Filtered people results"
-                columns={previewColumns}
-                rows={filteredPeople}
-                getRowKey={(person) => person.id}
-              />
-            )}
+                <p className="text-sm" aria-label="results count">
+                  {filteredPeople.length} results
+                </p>
+              </header>
+
+              {showEmptyState ? (
+                <div className="flex min-h-64 items-center justify-center border p-6">
+                  <div className="text-center">
+                    <div aria-hidden="true" className="mx-auto mb-4 h-16 w-16 rounded border" />
+                    <p className="text-sm">No matching users.</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded border">
+                  <Table
+                    caption="Filtered people results"
+                    columns={previewColumns}
+                    rows={filteredPeople}
+                    getRowKey={(person) => person.id}
+                  />
+                </div>
+              )}
+            </div>
           </section>
         </div>
+
+        <footer className="flex flex-wrap items-center gap-3 border-t pt-4">
+          <Button type="button" variant="secondary" size="md">
+            Save Search
+          </Button>
+          <Button type="button" variant="primary" size="md">
+            Preview Result
+          </Button>
+        </footer>
       </div>
     </Modal>
   );
 }
 
-interface FilterControlProps {
+interface FilterOptionsProps {
   filter: FilterConfig;
-  value: FilterValue | undefined;
-  onTextChange: (filterId: string, value: string) => void;
-  onSelectChange: (filterId: string, value: string) => void;
-  onMultiSelectToggle: (filterId: string, value: string) => void;
+  selectedValues: string[];
+  onToggleValue: (filterId: string, value: string) => void;
 }
 
-function FilterControl({
-  filter,
-  value,
-  onTextChange,
-  onSelectChange,
-  onMultiSelectToggle,
-}: FilterControlProps) {
-  const controlId = `filter-${filter.id}`;
-
-  if (filter.type === "text") {
-    return (
-      <div className="space-y-2">
-        <label htmlFor={controlId} className="block text-sm font-medium">
-          {filter.label}
-        </label>
-        <input
-          id={controlId}
-          type="text"
-          value={typeof value === "string" ? value : ""}
-          onChange={(event) => onTextChange(filter.id, event.target.value)}
-          placeholder={filter.placeholder}
-          className="w-full rounded border px-3 py-2 text-sm"
-        />
-      </div>
-    );
-  }
-
-  if (filter.type === "select") {
-    return (
-      <div className="space-y-2">
-        <label htmlFor={controlId} className="block text-sm font-medium">
-          {filter.label}
-        </label>
-        <select
-          id={controlId}
-          value={typeof value === "string" ? value : ""}
-          onChange={(event) => onSelectChange(filter.id, event.target.value)}
-          className="w-full rounded border px-3 py-2 text-sm"
-        >
-          <option value="">Select an option</option>
-          {filter.options?.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }
-
+function FilterOptions({ filter, selectedValues, onToggleValue }: FilterOptionsProps) {
   return (
     <fieldset className="space-y-3">
-      <legend className="text-sm font-medium">{filter.label}</legend>
-      <div className="flex flex-wrap gap-2">
+      <legend className="sr-only">{filter.label}</legend>
+      <div className="space-y-2">
         {filter.options?.map((option) => {
-          const selectedValues = Array.isArray(value) ? value : [];
           const isChecked = selectedValues.includes(option.value);
 
           return (
@@ -368,7 +278,7 @@ function FilterControl({
               <input
                 type="checkbox"
                 checked={isChecked}
-                onChange={() => onMultiSelectToggle(filter.id, option.value)}
+                onChange={() => onToggleValue(filter.id, option.value)}
               />
               <span>{option.label}</span>
             </label>
