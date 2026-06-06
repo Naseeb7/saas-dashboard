@@ -16,7 +16,7 @@ import { Button } from "@/components/shared/button";
 import { gridItems } from "@/data/grid-items";
 import { currentUser } from "@/data/users";
 import type { GridItem } from "@/types/grid";
-import { Building, User } from "lucide-react";
+import { Building, Plus, User } from "lucide-react";
 
 export default function Home() {
   const [isFindPeopleOpen, setIsFindPeopleOpen] = useState(false);
@@ -77,7 +77,12 @@ export default function Home() {
               >
                 Find People
               </Button>
-              <Button type="button" variant="secondary">
+              <Button
+                type="button"
+                leftIcon={<Plus size={14} className="text-background" />}
+                variant="secondary"
+                className="text-base"
+              >
                 New Grid
               </Button>
             </div>
