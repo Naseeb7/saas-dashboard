@@ -1,5 +1,9 @@
 "use client";
 
+import { Search } from "lucide-react";
+
+import { Button } from "@/components/shared/button";
+
 interface SearchSectionProps {
   onOpenFindPeople: () => void;
 }
@@ -14,13 +18,15 @@ export function SearchSection({ onOpenFindPeople }: SearchSectionProps) {
           </h2>
           <p className="mt-1 text-sm">Placeholder search area.</p>
         </div>
-        <button
+        <Button
           type="button"
+          variant="secondary"
+          size="sm"
+          leftIcon={<Search size={14} />}
           onClick={onOpenFindPeople}
-          className="rounded border px-3 py-2 text-sm"
         >
           Find People
-        </button>
+        </Button>
       </div>
     </section>
   );
