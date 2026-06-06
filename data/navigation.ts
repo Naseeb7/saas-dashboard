@@ -7,7 +7,6 @@ export const primaryNavigation: NavigationItem[] = [
     href: "/",
     icon: "dashboard",
     isActive: true,
-    trailingIcon: "arrow-right",
   },
   {
     id: "playbooks",
