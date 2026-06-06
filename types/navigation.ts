@@ -1,5 +1,7 @@
 export type NavigationIcon =
   | "dashboard"
+  | "playbooks"
+  | "integrations"
   | "people"
   | "projects"
   | "reports"
@@ -7,11 +9,14 @@ export type NavigationIcon =
   | "support"
   | "settings";
 
+export type NavigationTrailingIcon = "arrow-right" | "upgrade";
+
 export interface NavigationItem {
   id: string;
   label: string;
   href: string;
   icon: NavigationIcon;
   isActive?: boolean;
-  badge?: string;
+  disabled?: boolean;
+  trailingIcon?: NavigationTrailingIcon;
 }

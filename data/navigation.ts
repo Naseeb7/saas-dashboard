@@ -3,34 +3,25 @@ import type { NavigationItem } from "@/types/navigation";
 export const primaryNavigation: NavigationItem[] = [
   {
     id: "dashboard",
-    label: "Dashboard",
+    label: "My Dashboard",
     href: "/",
     icon: "dashboard",
     isActive: true,
+    trailingIcon: "arrow-right",
   },
   {
-    id: "people",
-    label: "People",
-    href: "/people",
-    icon: "people",
+    id: "playbooks",
+    label: "Playbooks",
+    href: "/subscription",
+    icon: "playbooks",
+    disabled: true,
+    trailingIcon: "upgrade",
   },
   {
-    id: "projects",
-    label: "Projects",
-    href: "/projects",
-    icon: "projects",
-  },
-  {
-    id: "reports",
-    label: "Reports",
-    href: "/reports",
-    icon: "reports",
-  },
-  {
-    id: "billing",
-    label: "Billing",
-    href: "/billing",
-    icon: "billing",
+    id: "integrations",
+    label: "Integrations",
+    href: "/integrations",
+    icon: "integrations",
   },
 ];
 

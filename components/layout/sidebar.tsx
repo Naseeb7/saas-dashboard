@@ -11,6 +11,7 @@ import {
   LifeBuoy,
   LayoutDashboard,
   LibraryBig,
+  Rocket,
   Settings,
   Users,
 } from "lucide-react";
@@ -182,7 +183,8 @@ function SidebarNavItem({
     href: string;
     icon: NavigationIcon;
     isActive?: boolean;
-    badge?: string;
+    disabled?: boolean;
+    trailingIcon?: "arrow-right" | "upgrade";
   };
   collapsed: boolean;
 }) {
@@ -194,7 +196,8 @@ function SidebarNavItem({
         icon={item.icon}
         collapsed={collapsed}
         active={item.isActive}
-        badge={item.badge}
+        disabled={item.disabled}
+        trailingIcon={item.trailingIcon}
       />
     </li>
   );
@@ -206,14 +209,16 @@ function SidebarNavLink({
   icon,
   collapsed,
   active,
-  badge,
+  disabled,
+  trailingIcon,
 }: {
   href: string;
   label: string;
   icon: NavigationIcon | "documentation";
   collapsed: boolean;
   active?: boolean;
-  badge?: string;
+  disabled?: boolean;
+  trailingIcon?: "arrow-right" | "upgrade";
 }) {
   const Icon = sidebarIcons[icon];
 
@@ -221,10 +226,12 @@ function SidebarNavLink({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
+      aria-disabled={disabled ? "true" : undefined}
       className={cn(
         "flex items-center gap-3 rounded px-3 py-2 text-sm",
         active ? "font-medium" : "font-normal",
         collapsed && "justify-center px-2",
+        disabled && "opacity-60",
       )}
     >
       <span
@@ -234,9 +241,15 @@ function SidebarNavLink({
         <Icon size={14} />
       </span>
       <span className={cn("truncate", collapsed && "sr-only")}>{label}</span>
-      {badge ? (
-        <span className={cn("ml-auto text-xs", collapsed && "sr-only")}>
-          {badge}
+      {trailingIcon ? (
+        <span className={cn("ml-auto inline-flex items-center", collapsed && "sr-only")}>
+          {trailingIcon === "arrow-right" ? (
+            <ChevronRight aria-hidden="true" size={14} />
+          ) : (
+            <span aria-hidden="true" className="inline-flex h-6 w-6 items-center justify-center rounded-full border">
+              <Rocket size={12} />
+            </span>
+          )}
         </span>
       ) : null}
     </Link>
@@ -245,6 +258,8 @@ function SidebarNavLink({
 
 const sidebarIcons: Record<NavigationIcon | "documentation", typeof LayoutDashboard> = {
   dashboard: LayoutDashboard,
+  playbooks: LibraryBig,
+  integrations: BriefcaseBusiness,
   people: Users,
   projects: BriefcaseBusiness,
   reports: LibraryBig,
