@@ -11,8 +11,6 @@ import {
   LifeBuoy,
   LayoutDashboard,
   LibraryBig,
-  PanelLeftClose,
-  PanelLeftOpen,
   Settings,
   Users,
 } from "lucide-react";
@@ -24,14 +22,17 @@ import type { NavigationIcon } from "@/types/navigation";
 
 interface SidebarProps {
   collapsed: boolean;
-  onToggleCollapse: () => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
-export function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
+export function Sidebar({ collapsed, onMouseEnter, onMouseLeave }: SidebarProps) {
   return (
     <aside
       aria-label="Sidebar navigation"
       className="hidden border-r md:flex md:flex-col"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <div
         className={cn(
@@ -62,15 +63,9 @@ export function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
               <ChevronDown aria-hidden="true" size={14} />
             </button>
           </div>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={onToggleCollapse}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
-          </Button>
+          <span aria-hidden="true" className="sr-only">
+            {collapsed ? "Collapsed" : "Expanded"}
+          </span>
         </div>
 
         <nav aria-label="Primary navigation" className="flex-1 py-4">

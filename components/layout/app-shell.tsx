@@ -11,7 +11,7 @@ interface AppShellProps {
 }
 
 export function AppShell({ children }: AppShellProps) {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   return (
     <div className="min-h-screen">
@@ -25,7 +25,8 @@ export function AppShell({ children }: AppShellProps) {
       >
         <Sidebar
           collapsed={isSidebarCollapsed}
-          onToggleCollapse={() => setIsSidebarCollapsed((current) => !current)}
+          onMouseEnter={() => setIsSidebarCollapsed(false)}
+          onMouseLeave={() => setIsSidebarCollapsed(true)}
         />
         <div className="flex min-w-0 flex-col">
           <Header />

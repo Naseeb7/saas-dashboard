@@ -5,13 +5,13 @@ const checklistItems = [
     completed: true,
   },
   {
-    id: "learn-bitagent",
-    label: "Learn about BitAgent",
+    id: "connect-integration",
+    label: "Connect an integration",
     completed: true,
   },
   {
-    id: "connect-integration",
-    label: "Connect an integration",
+    id: "learn-bitagent",
+    label: "Learn about BitAgent",
     completed: true,
   },
   {
@@ -44,6 +44,7 @@ export function ProgressCard() {
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={75}
+          aria-valuetext="75 percent complete"
           className="h-2 rounded border"
         />
       </div>
@@ -51,7 +52,10 @@ export function ProgressCard() {
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
         {checklistItems.map((item) => (
           <li key={item.id} className="flex items-center gap-2 text-sm">
-            <span aria-hidden="true" className="inline-flex h-4 w-4 items-center justify-center rounded-full border">
+            <span
+              aria-hidden="true"
+              className="inline-flex h-4 w-4 items-center justify-center rounded-full border"
+            >
               {item.completed ? "•" : "o"}
             </span>
             <span>{item.label}</span>

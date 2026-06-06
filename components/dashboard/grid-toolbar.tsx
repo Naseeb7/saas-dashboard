@@ -6,7 +6,7 @@ import { LayoutGrid, List, Search } from "lucide-react";
 import { Button } from "@/components/shared/button";
 
 export type GridTab = "my-grids" | "starred";
-export type GridViewMode = "table" | "compact";
+export type GridViewMode = "table" | "grid";
 
 interface GridToolbarProps {
   activeTab: GridTab;
@@ -95,27 +95,15 @@ function GridViewToggle({
   onViewModeChange: (mode: GridViewMode) => void;
 }) {
   return (
-    <div className="flex items-center gap-1 rounded border p-1" aria-label="View toggle">
-      <Button
-        type="button"
-        variant={viewMode === "table" ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => onViewModeChange("table")}
-        aria-pressed={viewMode === "table"}
-        aria-label="Table view"
-      >
-        <List size={14} aria-hidden="true" />
-      </Button>
-      <Button
-        type="button"
-        variant={viewMode === "compact" ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => onViewModeChange("compact")}
-        aria-pressed={viewMode === "compact"}
-        aria-label="Compact view"
-      >
-        <LayoutGrid size={14} aria-hidden="true" />
-      </Button>
-    </div>
+    <Button
+      type="button"
+      variant="secondary"
+      size="sm"
+      onClick={() => onViewModeChange(viewMode === "table" ? "grid" : "table")}
+      leftIcon={viewMode === "table" ? <List size={14} /> : <LayoutGrid size={14} />}
+      aria-label={viewMode === "table" ? "Switch to grid view" : "Switch to table view"}
+    >
+      {viewMode === "table" ? "Table View" : "Grid View"}
+    </Button>
   );
 }
