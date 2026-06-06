@@ -1,46 +1,30 @@
-"use client";
-
-import { ArrowRight, Plus, Search, Users } from "lucide-react";
-
-import { Button } from "@/components/shared/button";
-import { currentUser } from "@/data/users";
+import { Coins } from "lucide-react";
+import Image from "next/image";
+import { Button } from "../shared/button";
 
 export function Header() {
   return (
-    <header aria-label="Dashboard header" className="border-b">
-      <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 lg:px-6">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="rounded border px-3 py-2 text-sm">
-            Credits: 450000 / 550000
+    <header
+      aria-label="Dashboard header"
+      className="border-b border-black/8 px-5 py-2.75 flex items-center justify-end"
+    >
+      <div className="flex gap-4 items-center w-full justify-end">
+        <div className="flex items-center justify-between px-2 py-1 bg-green-100 text-green-900 rounded-[10.5px] gap-4 opacity-80">
+          <div className="flex font-medium items-center gap-2">
+            <Coins size={16} />
+            450000/5500000
           </div>
-          <div className="rounded border px-3 py-2 text-sm">
+          <div className="bg-green-900 text-background py-0.5 rounded-[8.5px] text-xs font-medium px-2 leading-4 border border-transparent hover:cursor-pointer">
             Booster Plan
           </div>
-          <div className="flex items-center gap-3 rounded border px-3 py-2">
-            <div
-              aria-hidden="true"
-              className="flex h-9 w-9 items-center justify-center rounded-full border text-xs"
-            >
-              {currentUser.initials}
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{currentUser.name}</p>
-              <p className="truncate text-xs">{currentUser.role}</p>
-            </div>
-          </div>
         </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <Button variant="secondary" size="sm" leftIcon={<Search size={14} />}>
-            Find Companies
-          </Button>
-          <Button variant="secondary" size="sm" leftIcon={<Users size={14} />}>
-            Find People
-          </Button>
-          <Button variant="primary" size="sm" leftIcon={<Plus size={14} />} rightIcon={<ArrowRight size={14} />}>
-            New Grid
-          </Button>
-        </div>
+        <Image
+          src={"/images/sidebar/person2.webp"}
+          alt="person"
+          height={28}
+          width={28}
+          className="h-7 w-7 rounded-full object-cover"
+        />
       </div>
     </header>
   );

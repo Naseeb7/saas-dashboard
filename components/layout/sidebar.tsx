@@ -37,14 +37,17 @@ export function Sidebar({
   return (
     <aside
       aria-label="Sidebar navigation"
-      className="hidden border-r border-(--border-primary) md:sticky md:top-0 md:flex md:h-screen md:self-start md:flex-col md:overflow-hidden"
+      className="hidden border-r border-gray-200 md:sticky md:top-0 md:flex md:h-screen md:self-start md:flex-col md:overflow-hidden"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <div className="flex h-full w-full flex-col justify-between">
         <div className="flex flex-col">
-          <section aria-label="Logo section" className={"px-5 lg:px-6 py-4"}>
-            <div aria-hidden="true" className={cn("flex h-10 items-center")}>
+          <section
+            aria-label="Logo section"
+            className={"px-5 lg:px-6 py-[16.5px]"}
+          >
+            <div aria-hidden="true" className={cn("flex items-center")}>
               {collapsed ? (
                 <Image
                   src={"/svgs/shared/logoCollapsed.svg"}
@@ -58,7 +61,7 @@ export function Sidebar({
                   src={"/svgs/shared/logoLight.svg"}
                   alt="Logo"
                   width={186}
-                  height={22}
+                  height={20}
                   className="w-auto h-auto"
                 />
               )}
@@ -169,9 +172,7 @@ export function Sidebar({
 }
 
 function SidebarDivider() {
-  return (
-    <div aria-hidden="true" className="border-b border-(--border-primary)" />
-  );
+  return <div aria-hidden="true" className="border-b border-gray-200" />;
 }
 
 function SidebarGroup({
