@@ -30,45 +30,61 @@ export function Sidebar({ collapsed, onMouseEnter, onMouseLeave }: SidebarProps)
   return (
     <aside
       aria-label="Sidebar navigation"
-      className="hidden border-r md:flex md:flex-col"
+      className="hidden border-r md:sticky md:top-0 md:flex md:h-screen md:self-start md:flex-col md:overflow-hidden"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div
-        className={cn(
-          "flex h-full min-h-screen w-full flex-col",
-          collapsed ? "p-3" : "p-4 lg:p-6",
-        )}
-      >
-        <div
+      <div className="flex h-full w-full flex-col">
+        <section
+          aria-label="Logo section"
           className={cn(
-            "flex items-center gap-3 border-b pb-4",
-            collapsed && "justify-between",
+            "space-y-3 px-3 pb-4 pt-3",
+            !collapsed && "px-4 lg:px-6",
           )}
         >
           <div
             aria-hidden="true"
-            className="flex h-10 w-10 items-center justify-center rounded"
+            className={cn(
+              "flex h-10 items-center",
+              collapsed ? "justify-center" : "justify-start",
+            )}
           >
-            B
+            <span className="text-xl font-medium">Bitscale</span>
           </div>
-          <div className={cn("min-w-0", collapsed && "sr-only")}>
-            <p className="truncate text-sm font-medium">Bitscale</p>
-            <button
-              type="button"
-              aria-label="Select workspace"
-              className="mt-1 flex w-full items-center justify-between gap-2 text-left text-sm"
-            >
-              <span className="truncate">GTM Spaces</span>
-              <ChevronDown aria-hidden="true" size={14} />
-            </button>
-          </div>
-          <span aria-hidden="true" className="sr-only">
-            {collapsed ? "Collapsed" : "Expanded"}
-          </span>
-        </div>
+        </section>
 
-        <nav aria-label="Primary navigation" className="flex-1 py-4">
+        <SidebarDivider />
+
+        <section
+          aria-label="Workspace section"
+          className={cn("space-y-3 px-3 py-4", !collapsed && "px-4 lg:px-6")}
+        >
+          <div className={cn("flex items-center gap-3", collapsed && "justify-center")}>
+            <div
+              aria-hidden="true"
+              className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border"
+            >
+              <span className="text-xs">GS</span>
+            </div>
+            <div className={cn("min-w-0 flex-1", collapsed && "sr-only")}>
+              <button
+                type="button"
+                aria-label="Select workspace"
+                className="flex w-full items-center justify-between gap-2 text-left text-sm"
+              >
+                <span className="truncate">GTM Spaces</span>
+                <ChevronDown aria-hidden="true" size={14} />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <SidebarDivider />
+
+        <nav
+          aria-label="Primary navigation"
+          className={cn("px-3 py-4", !collapsed && "px-4 lg:px-6")}
+        >
           <SidebarGroup title="Home" collapsed={collapsed}>
             {primaryNavigation.map((item) => (
               <SidebarNavItem key={item.id} item={item} collapsed={collapsed} />
@@ -82,16 +98,18 @@ export function Sidebar({ collapsed, onMouseEnter, onMouseLeave }: SidebarProps)
               icon="documentation"
               collapsed={collapsed}
             />
-            <SidebarNavLink
-              href="/settings"
-              label="Settings"
-              icon="settings"
-              collapsed={collapsed}
-            />
+            <SidebarNavLink href="/settings" label="Settings" icon="settings" collapsed={collapsed} />
           </SidebarGroup>
         </nav>
 
-        <section aria-label="Support section" className="mt-auto border-t pt-4">
+        <div aria-hidden="true" className="flex-1" />
+
+        <SidebarDivider />
+
+        <section
+          aria-label="Support section"
+          className={cn("px-3 pb-3 pt-4", !collapsed && "px-4 lg:px-6")}
+        >
           <div
             className={cn(
               "flex items-center gap-3 rounded border p-3",
@@ -122,6 +140,10 @@ export function Sidebar({ collapsed, onMouseEnter, onMouseLeave }: SidebarProps)
       </div>
     </aside>
   );
+}
+
+function SidebarDivider() {
+  return <div aria-hidden="true" className="border-b" />;
 }
 
 function SidebarGroup({
