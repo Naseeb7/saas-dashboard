@@ -18,7 +18,6 @@ import {
   ChevronUp,
 } from "lucide-react";
 
-import { Button } from "@/components/shared/button";
 import { primaryNavigation } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 import type { NavigationIcon } from "@/types/navigation";

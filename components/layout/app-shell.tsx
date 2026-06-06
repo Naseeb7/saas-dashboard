@@ -18,6 +18,7 @@ export function AppShell({ children }: AppShellProps) {
       <div
         className={cn(
           "mx-auto grid min-h-screen max-w-screen-2xl",
+          "lg:transition-[grid-template-columns] lg:duration-300 lg:ease-in-out",
           isSidebarCollapsed
             ? "lg:grid-cols-[88px_minmax(0,1fr)]"
             : "lg:grid-cols-[280px_minmax(0,1fr)]",
