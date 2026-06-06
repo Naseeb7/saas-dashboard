@@ -69,12 +69,12 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="flex h-[min(90vh,calc(100vh-2rem))] w-full max-w-5xl flex-col overflow-hidden border bg-black"
+          className="flex h-[min(90vh,calc(100vh-2rem))] w-full max-w-5xl flex-col overflow-hidden border border-border-custom bg-surface"
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
         >
-          <div className="flex items-center justify-between gap-4 border-b p-4">
+          <div className="flex items-center justify-between gap-4 border-b border-border-custom p-4">
             <h2 id={titleId} className="text-base font-medium">
               {title}
             </h2>
@@ -83,7 +83,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
               type="button"
               onClick={() => onOpenChange(false)}
               aria-label="Close dialog"
-              className="rounded border px-3 py-2 text-sm"
+              className="rounded border border-border-custom px-3 py-2 text-sm"
             >
               Close
             </button>

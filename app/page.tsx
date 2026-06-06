@@ -56,7 +56,7 @@ export default function Home() {
         >
           <header className="flex justify-between">
             <div className="flex flex-col gap-1">
-              <p className="text-lg font-semibold text-black-100">
+              <p className="text-lg font-semibold text-sidebar-dark">
                 Welcome back, {currentUser.name}!
               </p>
               <p className="text-gray-500">
@@ -66,13 +66,13 @@ export default function Home() {
             <div className="flex flex-wrap gap-2 items-center">
               <Button
                 type="button"
-                leftIcon={<Building size={16} className="text-green-200" />}
+                leftIcon={<Building size={16} className="text-success-text" />}
               >
                 Find Companies
               </Button>
               <Button
                 type="button"
-                leftIcon={<User size={16} className="text-purple-100" />}
+                leftIcon={<User size={16} className="text-brand" />}
                 onClick={() => setIsFindPeopleOpen(true)}
               >
                 Find People

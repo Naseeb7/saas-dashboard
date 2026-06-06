@@ -37,7 +37,7 @@ export function Sidebar({
   return (
     <aside
       aria-label="Sidebar navigation"
-      className="hidden border-r border-gray-200 md:sticky md:top-0 md:flex md:h-screen md:self-start md:flex-col md:overflow-hidden"
+      className="hidden border-r border-border-custom md:sticky md:top-0 md:flex md:h-screen md:self-start md:flex-col md:overflow-hidden"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -92,17 +92,13 @@ export function Sidebar({
                   />
                 </div>
                 {!collapsed && (
-                  <span className="font-medium font-sm text-gray-800">
+                  <span className="font-medium font-sm text-sidebar-dark">
                     GTM Spaces
                   </span>
                 )}
               </div>
               {!collapsed && (
-                <ChevronsUpDown
-                  className="text-gray-500"
-                  height={16}
-                  width={16}
-                />
+                <ChevronsUpDown className="text-muted" height={16} width={16} />
               )}
             </div>
           </section>
@@ -138,8 +134,8 @@ export function Sidebar({
         </div>
 
         <section aria-label="Support section" className={"flex p-2"}>
-          <div className="flex flex-col px-3 py-4 bg-gray-100 w-full gap-1">
-            <div className="flex justify-between w-full text-gray-800 items-center">
+          <div className="flex flex-col px-3 py-4 bg-surface-muted w-full gap-1">
+            <div className="flex justify-between w-full text-sidebar-dark items-center">
               {collapsed ? (
                 <Image
                   src={"/svgs/shared/logoCollapsed.svg"}
@@ -160,7 +156,7 @@ export function Sidebar({
               <ChevronUp size={12} />
             </div>
             {!collapsed && (
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-muted">
                 Get Support at Bitscale{" "}
               </span>
             )}
@@ -172,7 +168,7 @@ export function Sidebar({
 }
 
 function SidebarDivider() {
-  return <div aria-hidden="true" className="border-b border-gray-200" />;
+  return <div aria-hidden="true" className="border-b border-border-custom" />;
 }
 
 function SidebarGroup({
@@ -187,9 +183,9 @@ function SidebarGroup({
   return (
     <section className={"flex flex-col p-2 gap-2"}>
       {!collapsed && (
-        <h2 className={"p-2 text-xs font-medium text-gray-500"}>{title}</h2>
+        <h2 className={"p-2 text-xs font-medium text-muted"}>{title}</h2>
       )}
-      <ul className="flex flex-col gap-1 text-gray-800">{children}</ul>
+      <ul className="flex flex-col gap-1 text-sidebar-dark">{children}</ul>
     </section>
   );
 }
@@ -250,20 +246,20 @@ function SidebarNavLink({
       aria-disabled={disabled ? "true" : undefined}
       className={cn(
         "flex items-center gap-2 rounded-lg p-2 text-sm w-full justify-between",
-        disabled && "text-gray-400",
-        active ? "font-medium text-blue-100 bg-gray-100" : "font-normal",
+        disabled && "text-muted",
+        active ? "font-medium text-brand bg-surface-muted" : "font-normal",
         collapsed && "justify-center px-2",
       )}
     >
       <div className="flex gap-2 items-center">
-        <Icon size={16} className="text-gray-500" />
+        <Icon size={16} className="text-muted" />
         {!collapsed && <span className="truncate">{label}</span>}
       </div>
-      {!collapsed && active && <ChevronRight size={16} />}
+      {!collapsed && active && <ChevronRight size={16} className="text-brand" />}
       {!collapsed && trailingIcon ? (
         <span
           aria-hidden="true"
-          className="inline-flex py-1.5 px-3 items-center justify-center rounded-full bg-(--light-yellow) text-(--dark-yellow)"
+          className="inline-flex items-center justify-center rounded-full bg-warning-bg px-3 py-1.5 text-warning-text"
         >
           <Rocket size={12} />
         </span>
