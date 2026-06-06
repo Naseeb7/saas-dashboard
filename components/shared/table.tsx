@@ -15,6 +15,7 @@ interface TableProps<T> {
   rows: T[];
   getRowKey: (row: T) => string;
   emptyState?: ReactNode;
+  hideHeader?: boolean;
   expandedRowIds?: string[];
   renderExpandedRow?: (row: T) => ReactNode;
 }
@@ -25,6 +26,7 @@ export function Table<T>({
   rows,
   getRowKey,
   emptyState,
+  hideHeader = false,
   expandedRowIds,
   renderExpandedRow,
 }: TableProps<T>) {
@@ -32,7 +34,7 @@ export function Table<T>({
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse">
         {caption ? <caption className="sr-only">{caption}</caption> : null}
-        <thead>
+        <thead className={hideHeader ? "sr-only" : undefined}>
           <tr>
             {columns.map((column) => (
               <th

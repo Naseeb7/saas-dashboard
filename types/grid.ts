@@ -17,7 +17,7 @@ export interface GridAction {
   type: GridActionType;
 }
 
-export interface GridItem {
+export interface GridRowBase {
   id: string;
   name: string;
   editedBy: User;
@@ -25,4 +25,10 @@ export interface GridItem {
   source: GridSource;
   isFavorite: boolean;
   actions: GridAction[];
+}
+
+export type GridChildItem = GridRowBase;
+
+export interface GridItem extends GridRowBase {
+  children?: GridChildItem[];
 }

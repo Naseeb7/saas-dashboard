@@ -11,6 +11,7 @@ import { FindPeopleModal } from "@/components/modal/find-people-modal";
 import { Button } from "@/components/shared/button";
 import { gridItems } from "@/data/grid-items";
 import { currentUser } from "@/data/users";
+import type { GridItem } from "@/types/grid";
 
 export default function Home() {
   const [isFindPeopleOpen, setIsFindPeopleOpen] = useState(false);
@@ -18,7 +19,7 @@ export default function Home() {
   const [searchValue, setSearchValue] = useState("");
   const [viewMode, setViewMode] = useState<GridViewMode>("table");
   const [favoriteMap, setFavoriteMap] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(gridItems.map((item) => [item.id, item.isFavorite])),
+    createFavoriteMap(gridItems),
   );
   const [expandedRowId, setExpandedRowId] = useState<string | null>(gridItems[0]?.id ?? null);
 
@@ -99,4 +100,18 @@ export default function Home() {
       <FindPeopleModal open={isFindPeopleOpen} onOpenChange={setIsFindPeopleOpen} />
     </>
   );
+}
+
+function createFavoriteMap(rows: GridItem[]) {
+  const map: Record<string, boolean> = {};
+
+  for (const row of rows) {
+    map[row.id] = row.isFavorite;
+
+    for (const childRow of row.children ?? []) {
+      map[childRow.id] = childRow.isFavorite;
+    }
+  }
+
+  return map;
 }

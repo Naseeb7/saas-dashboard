@@ -21,6 +21,68 @@ export const gridItems: GridItem[] = [
         type: "edit",
       },
     ],
+    children: [
+      {
+        id: "grid-001-a",
+        name: "Homepage crawl notes",
+        editedBy: teamMembers[1],
+        lastEditedAt: "2026-06-05T15:05:00Z",
+        source: "website",
+        isFavorite: true,
+        actions: [
+          {
+            id: "view",
+            label: "View",
+            type: "view",
+          },
+          {
+            id: "edit",
+            label: "Edit",
+            type: "edit",
+          },
+        ],
+      },
+      {
+        id: "grid-001-b",
+        name: "Pricing page signals",
+        editedBy: teamMembers[2],
+        lastEditedAt: "2026-06-05T15:18:00Z",
+        source: "linkedin",
+        isFavorite: false,
+        actions: [
+          {
+            id: "view",
+            label: "View",
+            type: "view",
+          },
+          {
+            id: "archive",
+            label: "Archive",
+            type: "archive",
+          },
+        ],
+      },
+      {
+        id: "grid-001-c",
+        name: "Signup flow observations",
+        editedBy: teamMembers[3],
+        lastEditedAt: "2026-06-05T15:32:00Z",
+        source: "google",
+        isFavorite: false,
+        actions: [
+          {
+            id: "view",
+            label: "View",
+            type: "view",
+          },
+          {
+            id: "edit",
+            label: "Edit",
+            type: "edit",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "grid-002",
@@ -41,6 +103,48 @@ export const gridItems: GridItem[] = [
         type: "archive",
       },
     ],
+    children: [
+      {
+        id: "grid-002-a",
+        name: "Priority account list",
+        editedBy: teamMembers[0],
+        lastEditedAt: "2026-06-04T10:20:00Z",
+        source: "sales-nav",
+        isFavorite: true,
+        actions: [
+          {
+            id: "view",
+            label: "View",
+            type: "view",
+          },
+          {
+            id: "edit",
+            label: "Edit",
+            type: "edit",
+          },
+        ],
+      },
+      {
+        id: "grid-002-b",
+        name: "Warm intro pipeline",
+        editedBy: teamMembers[1],
+        lastEditedAt: "2026-06-04T10:42:00Z",
+        source: "hubspot",
+        isFavorite: false,
+        actions: [
+          {
+            id: "view",
+            label: "View",
+            type: "view",
+          },
+          {
+            id: "archive",
+            label: "Archive",
+            type: "archive",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "grid-003",
@@ -59,6 +163,28 @@ export const gridItems: GridItem[] = [
         id: "edit",
         label: "Edit",
         type: "edit",
+      },
+    ],
+    children: [
+      {
+        id: "grid-003-a",
+        name: "Competitor backlinks",
+        editedBy: teamMembers[2],
+        lastEditedAt: "2026-06-03T18:52:00Z",
+        source: "website",
+        isFavorite: true,
+        actions: [
+          {
+            id: "view",
+            label: "View",
+            type: "view",
+          },
+          {
+            id: "archive",
+            label: "Archive",
+            type: "archive",
+          },
+        ],
       },
     ],
   },
