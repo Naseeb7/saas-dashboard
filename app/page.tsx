@@ -118,10 +118,7 @@ export default function Home() {
           />
         </section>
       </AppShell>
-      <FindPeopleModal
-        open={isFindPeopleOpen}
-        onOpenChange={setIsFindPeopleOpen}
-      />
+      <FindPeopleModal open={true} onOpenChange={setIsFindPeopleOpen} />
     </>
   );
 }

@@ -28,6 +28,8 @@
   --color-check-border: #d1d5dc;
   --color-table-bg: #f9fafb;
   --color-starred-border: #fdb022;
+  --color-modal-header: #111928;
+  --color-modal-search-border: #d1d5db;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -70,4 +72,8 @@ body {
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

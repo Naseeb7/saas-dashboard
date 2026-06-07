@@ -1,5 +1,6 @@
 "use client";
 
+import { X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect, useId, useRef } from "react";
 
@@ -57,7 +58,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/30"
+      className="fixed inset-0 bg-black/20"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onOpenChange(false);
@@ -69,26 +70,24 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="flex h-[min(90vh,calc(100vh-2rem))] w-full max-w-5xl flex-col overflow-hidden border border-border-custom bg-surface"
+          className="flex h-[min(92vh,calc(100vh-2rem))] w-full max-w-5xl flex-col overflow-hidden border border-border-custom bg-surface rounded-lg shadow-sm shadow-black/8 px-8 pt-8 pb-4.5 relative"
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
         >
-          <div className="flex items-center justify-between gap-4 border-b border-border-custom p-4">
-            <h2 id={titleId} className="text-base font-medium">
-              {title}
-            </h2>
-            <button
-              ref={closeButtonRef}
-              type="button"
-              onClick={() => onOpenChange(false)}
-              aria-label="Close dialog"
-              className="rounded border border-border-custom px-3 py-2 text-sm"
-            >
-              Close
-            </button>
-          </div>
-          <div className="flex-1 min-h-0">
+          <h2 id={titleId} className="sr-only">
+            {title}
+          </h2>
+          <button
+            ref={closeButtonRef}
+            type="button"
+            onClick={() => onOpenChange(false)}
+            aria-label="Close dialog"
+            className="absolute top-3 right-3 rounded-full p-1 bg-border-custom flex justify-center items-center hover:cursor-pointer"
+          >
+            <X size={12} />
+          </button>
+          <div className="flex h-full min-h-0 flex-1 overflow-hidden">
             {children}
           </div>
         </div>

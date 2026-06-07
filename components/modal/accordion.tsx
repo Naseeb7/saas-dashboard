@@ -40,7 +40,7 @@ export function Accordion<T>({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="flex flex-col">
       {items.map((item) => {
         const itemId = getItemId(item);
         const panelId = `${itemId}-panel`;
@@ -48,7 +48,10 @@ export function Accordion<T>({
         const isOpen = openItemIds.has(itemId);
 
         return (
-          <section key={itemId} className="border">
+          <section
+            key={itemId}
+            className="border-b border-border-custom py-3 flex flex-col gap-3"
+          >
             <h3>
               <button
                 id={buttonId}
@@ -56,23 +59,35 @@ export function Accordion<T>({
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggleItem(itemId)}
-                className="flex w-full items-center justify-between gap-4 p-4 text-left"
+                className="flex w-full items-center justify-between"
               >
-                <span className="min-w-0">
-                  <span className="block text-sm font-medium">{getItemTitle(item)}</span>
+                <span className="flex flex-col items-start gap-1.5">
+                  <span className="flex gap-2 text-sm font-semibold text-modal-header">
+                    {getItemTitle(item)}
+                  </span>
                   {getItemDescription ? (
-                    <span className="block text-xs">{getItemDescription(item)}</span>
+                    <span className="block text-xs text-muted">
+                      {getItemDescription(item)}
+                    </span>
                   ) : null}
                 </span>
                 <ChevronDown
                   aria-hidden="true"
-                  size={14}
-                  className={cn("shrink-0 transition-transform", isOpen && "rotate-180")}
+                  size={16}
+                  className={cn(
+                    "shrink-0 transition-transform",
+                    isOpen && "rotate-180",
+                  )}
                 />
               </button>
             </h3>
             {isOpen ? (
-              <div id={panelId} role="region" aria-labelledby={buttonId} className="p-4 pt-0">
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                className=""
+              >
                 {renderItem(item)}
               </div>
             ) : null}

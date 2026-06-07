@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { Check, ChevronDown, Search, User as UserIcon } from "lucide-react";
 
 import { Accordion } from "@/components/modal/accordion";
 import { Modal } from "@/components/modal/modal";
@@ -70,7 +70,13 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
   const filteredPeople = peopleDirectory.filter((person) => {
     const keywordMatches =
       keyword.length === 0 ||
-      [person.name, person.company, person.role, person.email, person.companyWebsite ?? ""]
+      [
+        person.name,
+        person.company,
+        person.role,
+        person.email,
+        person.companyWebsite ?? "",
+      ]
         .join(" ")
         .toLowerCase()
         .includes(keyword);
@@ -83,14 +89,18 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
     const selectedManagementLevels = filters["management-level"] ?? [];
 
     const jobTitleMatches =
-      jobTitleValues.length === 0 || jobTitleValues.includes(person.role.toLowerCase());
+      jobTitleValues.length === 0 ||
+      jobTitleValues.includes(person.role.toLowerCase());
 
     const companyWebsiteMatches =
       companyWebsiteValues.length === 0 ||
-      companyWebsiteValues.includes((person.companyWebsite ?? "").toLowerCase());
+      companyWebsiteValues.includes(
+        (person.companyWebsite ?? "").toLowerCase(),
+      );
 
     const locationMatches =
-      selectedPersonLocations.length === 0 || selectedPersonLocations.includes(person.location);
+      selectedPersonLocations.length === 0 ||
+      selectedPersonLocations.includes(person.location);
 
     const companyLocationMatches =
       selectedCompanyLocations.length === 0 ||
@@ -116,7 +126,9 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
   });
 
   const showEmptyState =
-    keyword.length > 0 || selectedValueCount > 0 ? filteredPeople.length === 0 : false;
+    keyword.length > 0 || selectedValueCount > 0
+      ? filteredPeople.length === 0
+      : false;
 
   const toggleMultiSelectValue = (filterId: string, value: string) => {
     setFilters((current) => {
@@ -134,81 +146,66 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
 
   return (
     <Modal open={open} onOpenChange={onOpenChange} title="Find People">
-      <div className="flex h-full min-h-0 flex-col p-4">
-        <header className="flex flex-wrap items-start justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <h2 className="text-lg font-medium">Find People</h2>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              rightIcon={<ChevronDown size={14} aria-hidden="true" />}
+      <div className="flex h-full min-h-0 flex-1 flex-col gap-6 overflow-hidden">
+        <div className="flex min-h-0 flex-1 gap-5 overflow-hidden">
+          <aside className="flex h-full min-h-0 w-2/5 flex-col overflow-y-auto">
+            <header className="flex w-full justify-between text-modal-header sticky top-0 bg-surface">
+              <h2 className="text-lg font-extrabold ">Find People</h2>
+              <span className="flex gap-1 py-0.5 px-2.5 bg-surface-muted rounded-md items-center">
+                <ChevronDown size={14} />{" "}
+                <span className="text-xs font-medium">Saved Search</span>
+              </span>
+            </header>
+            <section
+              aria-labelledby="keyword-heading"
+              className="flex flex-col gap-1 mt-6 py-4 border-b border-border-custom"
             >
-              Saved Search
-            </Button>
-          </div>
+              <h3
+                id="keyword-heading"
+                className="font-bold text-modal-header flex gap-2 items-center"
+              >
+                <UserIcon size={16} />
+                People Keyword
+              </h3>
+              <label className="flex items-center gap-2 border-b-2 border-modal-search-border py-3">
+                <Search size={16} aria-hidden="true" />
+                <span className="sr-only">Search keyword</span>
+                <input
+                  type="search"
+                  value={keywordQuery}
+                  onChange={(event) => setKeywordQuery(event.target.value)}
+                  placeholder="Enter single keyword here..."
+                  className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted"
+                />
+              </label>
+            </section>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="rounded border px-3 py-2 text-sm">
-              {usedCredits}/{totalCredits}
-            </div>
-            <div className="rounded border px-3 py-2 text-sm">
-              Unlock 100,000 leads with Enterprise Plan*
-            </div>
-          </div>
-        </header>
-
-        <div className="flex flex-wrap items-center justify-between gap-3 py-4">
-          <p className="text-sm">
-            Found {filteredPeople.length} people. Click preview to view results.
-          </p>
-          <p className="text-sm">Import people from saved search or apply filters.</p>
-        </div>
-
-        <div className="grid min-h-0 flex-1 gap-4 grid-rows-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-rows-none lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
-          <aside className="flex min-h-0 flex-col overflow-hidden">
-            <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pr-2">
-              <section aria-labelledby="keyword-heading" className="space-y-2 rounded border p-4">
-                <h3 id="keyword-heading" className="text-sm font-medium">
-                  People Keyword
-                </h3>
-                <label className="flex items-center gap-2 rounded border px-3 py-2">
-                  <Search size={14} aria-hidden="true" />
-                  <span className="sr-only">Search keyword</span>
-                  <input
-                    type="search"
-                    value={keywordQuery}
-                    onChange={(event) => setKeywordQuery(event.target.value)}
-                    placeholder="Enter single keyword here..."
-                    className="min-w-0 flex-1 bg-transparent text-sm outline-none"
-                  />
-                </label>
-              </section>
-
-              <Accordion<FilterSection>
-                items={filterSections}
-                getItemId={(section) => section.id}
-                getItemTitle={(section) => section.title}
-                getItemDescription={(section) => section.description}
-                renderItem={(section) => (
-                  <div className="space-y-3">
-                    {section.filters.map((filter) => (
-                      <FilterOptions
-                        key={filter.id}
-                        filter={filter}
-                        selectedValues={filters[filter.id] ?? []}
-                        onToggleValue={toggleMultiSelectValue}
-                      />
-                    ))}
-                  </div>
-                )}
-              />
-            </div>
+            <Accordion<FilterSection>
+              items={filterSections}
+              getItemId={(section) => section.id}
+              getItemTitle={(section) => section.title}
+              getItemDescription={(section) => section.description}
+              renderItem={(section) => (
+                <div>
+                  {section.filters.map((filter) => (
+                    <FilterOptions
+                      key={filter.id}
+                      filter={filter}
+                      selectedValues={filters[filter.id] ?? []}
+                      onToggleValue={toggleMultiSelectValue}
+                    />
+                  ))}
+                </div>
+              )}
+            />
           </aside>
 
-          <section aria-labelledby="preview-heading" className="flex min-h-0 flex-col overflow-hidden">
-            <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pl-2">
-              <header className="flex flex-wrap items-start justify-between gap-3 rounded border p-4">
+          <section
+            aria-labelledby="preview-heading"
+            className="flex h-full min-h-0 w-3/5 self-stretch flex-col overflow-hidden"
+          >
+            <div className="flex h-full min-h-0 flex-1 flex-col pl-2">
+              <header className="flex shrink-0 flex-wrap items-start justify-between gap-3 rounded border p-4">
                 <div>
                   <h3 id="preview-heading" className="text-sm font-medium">
                     Preview
@@ -223,14 +220,17 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
               </header>
 
               {showEmptyState ? (
-                <div className="flex min-h-64 items-center justify-center border p-6">
+                <div className="flex min-h-0 flex-1 items-center justify-center overflow-auto border p-6">
                   <div className="text-center">
-                    <div aria-hidden="true" className="mx-auto mb-4 h-16 w-16 rounded border" />
+                    <div
+                      aria-hidden="true"
+                      className="mx-auto mb-4 h-16 w-16 rounded border"
+                    />
                     <p className="text-sm">No matching users.</p>
                   </div>
                 </div>
               ) : (
-                <div className="rounded border">
+                <div className="flex min-h-0 flex-1 flex-col overflow-auto">
                   <Table
                     caption="Filtered people results"
                     columns={previewColumns}
@@ -243,7 +243,7 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
           </section>
         </div>
 
-        <footer className="flex flex-wrap items-center gap-3 border-t pt-4">
+        <footer className="flex flex-wrap items-center gap-3">
           <Button type="button" variant="secondary" size="md">
             Save Search
           </Button>
@@ -262,29 +262,42 @@ interface FilterOptionsProps {
   onToggleValue: (filterId: string, value: string) => void;
 }
 
-function FilterOptions({ filter, selectedValues, onToggleValue }: FilterOptionsProps) {
+function FilterOptions({
+  filter,
+  selectedValues,
+  onToggleValue,
+}: FilterOptionsProps) {
   return (
-    <fieldset className="space-y-3">
-      <legend className="sr-only">{filter.label}</legend>
-      <div className="space-y-2">
-        {filter.options?.map((option) => {
-          const isChecked = selectedValues.includes(option.value);
+    <fieldset className="flex flex-col gap-2">
+      {/* <legend className="sr-only">{filter.label}</legend> */}
+      {filter.options?.map((option) => {
+        const isChecked = selectedValues.includes(option.value);
 
-          return (
-            <label
-              key={option.value}
-              className="flex items-center gap-2 rounded border px-3 py-2 text-sm"
+        return (
+          <label
+            key={option.value}
+            className="flex cursor-pointer items-center gap-2 py-2 text-xs text-modal-header"
+          >
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={() => onToggleValue(filter.id, option.value)}
+              className="sr-only peer"
+            />
+            <span
+              className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
+                isChecked
+                  ? "border-brand bg-brand"
+                  : "border-border-custom bg-transparent"
+              }`}
+              aria-hidden="true"
             >
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={() => onToggleValue(filter.id, option.value)}
-              />
-              <span>{option.label}</span>
-            </label>
-          );
-        })}
-      </div>
+              {isChecked ? <Check size={12} className="text-surface" /> : null}
+            </span>
+            <span>{option.label}</span>
+          </label>
+        );
+      })}
     </fieldset>
   );
 }
