@@ -26,10 +26,10 @@ export function GridToolbar({
   onViewModeChange,
 }: GridToolbarProps) {
   return (
-    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:px-5 px-3">
+    <div className="flex flex-col gap-4 px-3 lg:flex-row lg:items-start lg:justify-between lg:px-5">
       <GridTabs activeTab={activeTab} onTabChange={onTabChange} />
 
-      <div className="flex flex-wrap items-center gap-6 w-1/3 justify-end">
+      <div className="flex w-full flex-wrap items-center justify-end gap-6 lg:w-1/3">
         <GridSearchField value={searchValue} onChange={onSearchChange} />
         <GridViewToggle
           viewMode={viewMode}
@@ -86,7 +86,7 @@ function GridSearchField({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="flex items-center gap-4 rounded-[8.5px]  px-3 py-2.5 bg-surface-muted w-4/5">
+    <label className="flex w-full items-center gap-4 rounded-[8.5px] bg-surface-muted px-3 py-2.5 lg:w-4/5">
       <Search size={14} aria-hidden="true" className="text-muted" />
       <input
         type="search"
@@ -110,7 +110,7 @@ function GridViewToggle({
 }) {
   return (
     <div
-      className="rounded-full bg-surface-muted px-2.25 py-2.25 flex h-auto "
+      className="flex h-auto rounded-full bg-surface-muted px-2.25 py-2.25"
       onClick={() => onViewModeChange(viewMode === "table" ? "grid" : "table")}
       aria-label={
         viewMode === "table" ? "Switch to grid view" : "Switch to table view"

@@ -52,9 +52,9 @@ export default function Home() {
       <AppShell>
         <section
           aria-label="Dashboard content"
-          className="flex flex-col gap-6 p-5.25"
+          className="flex flex-col gap-6 p-4 lg:p-5.25"
         >
-          <header className="flex justify-between">
+          <header className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex flex-col gap-1">
               <p className="text-lg font-semibold text-sidebar-dark">
                 Welcome back, {currentUser.name}!
@@ -63,10 +63,11 @@ export default function Home() {
                 Here&apos;s your daily scoop on Bitscale!
               </p>
             </div>
-            <div className="flex flex-wrap gap-2 items-center">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
               <Button
                 type="button"
                 leftIcon={<Building size={16} className="text-success-text" />}
+                className="w-full sm:w-auto"
               >
                 Find Companies
               </Button>
@@ -74,6 +75,7 @@ export default function Home() {
                 type="button"
                 leftIcon={<User size={16} className="text-brand" />}
                 onClick={() => setIsFindPeopleOpen(true)}
+                className="w-full sm:w-auto"
               >
                 Find People
               </Button>
@@ -81,7 +83,7 @@ export default function Home() {
                 type="button"
                 leftIcon={<Plus size={14} className="text-background" />}
                 variant="secondary"
-                className="text-base"
+                className="w-full sm:w-auto text-base"
               >
                 New Grid
               </Button>

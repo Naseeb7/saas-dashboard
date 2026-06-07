@@ -146,8 +146,8 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
   return (
     <Modal open={open} onOpenChange={onOpenChange} title="Find People">
       <div className="flex h-full min-h-0 flex-1 flex-col gap-6 overflow-hidden">
-        <div className="flex min-h-0 flex-1 gap-5 overflow-hidden">
-          <aside className="flex h-full min-h-0 w-1/3 flex-col overflow-y-auto">
+        <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-hidden lg:flex-row">
+          <aside className="flex h-full min-h-0 w-full flex-col overflow-y-auto lg:w-1/3">
             <header className="flex w-full justify-between text-modal-header sticky top-0 bg-surface">
               <h2 className="text-lg font-extrabold ">Find People</h2>
               <span className="flex gap-1 py-0.5 px-2.5 bg-surface-muted rounded-md items-center">
@@ -201,7 +201,7 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
 
           <section
             aria-labelledby="preview-heading"
-            className="flex h-full min-h-0 w-2/3 self-stretch flex-col overflow-hidden"
+            className="flex h-full min-h-0 w-full self-stretch flex-col overflow-hidden lg:w-2/3"
           >
             <div className="flex h-full min-h-0 flex-1 flex-col gap-2">
               <header className="flex justify-between flex-col gap-1">
@@ -238,11 +238,11 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
           </section>
         </div>
 
-        <footer className="flex flex-wrap items-center gap-4 w-1/3">
+        <footer className="flex w-full flex-col flex-wrap items-stretch gap-4 lg:w-1/3 lg:flex-row lg:items-center">
           <Button
             type="button"
             variant="primary"
-            className="w-full md:w-2/5 bg-border-custom text-sidebar"
+            className="w-full bg-border-custom text-sidebar lg:w-2/5"
             leftIcon={<FileSearchCorner size={16} />}
           >
             Save Search
@@ -250,7 +250,7 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
           <Button
             type="button"
             variant="secondary"
-            className="w-full md:w-1/2"
+            className="w-full lg:w-1/2"
             leftIcon={<Eye size={16} className="text-surface" />}
           >
             Preview Result

@@ -65,12 +65,12 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
         }
       }}
     >
-      <div className="flex min-h-full items-center justify-center p-4">
+      <div className="flex min-h-full items-center justify-center p-2 sm:p-4">
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="flex h-[min(92vh,calc(100vh-2rem))] w-full max-w-5xl flex-col overflow-hidden border border-border-custom bg-surface rounded-lg shadow-sm shadow-black/8 px-8 pt-8 pb-4.5 relative"
+          className="relative flex h-[calc(100vh-1rem)] w-[calc(100vw-1rem)] max-w-none flex-col overflow-hidden rounded-none border border-border-custom bg-surface px-4 pt-4 pb-4 shadow-sm shadow-black/8 sm:h-[min(92vh,calc(100vh-2rem))] sm:w-full sm:rounded-lg sm:px-8 sm:pt-8 sm:pb-4.5 sm:max-w-5xl"
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
