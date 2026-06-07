@@ -19,6 +19,13 @@
   --color-surface: #ffffff;
   --color-border-custom: #e5e7eb;
   --color-muted: #6b7280;
+  --color-update-bg: #e7f3f8;
+  --color-update-text: #347fa9;
+  --color-update-dot: #8dbad0;
+  --color-update-muted: #9ca3af;
+  --color-icon-bg-dark: #4b5563;
+  --color-progress-text-dark: #4b5563;
+  --color-check-border: #d1d5dc;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

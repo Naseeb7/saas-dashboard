@@ -87,7 +87,7 @@ export default function Home() {
               </Button>
             </div>
           </header>
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-4 lg:gap-6 lg:grid-cols-2">
             <LatestUpdateCard />
             <ProgressCard />
           </div>
