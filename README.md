@@ -1,36 +1,154 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bitscale SaaS Dashboard
+
+A frontend engineering assignment built with Next.js App Router, TypeScript, Tailwind CSS v4, and Lucide React. The project focuses on clean architecture, reusable UI primitives, responsive layout behavior, accessibility, and configuration-driven rendering.
+
+## Overview
+
+This application implements two primary experiences:
+
+- A dashboard page with sidebar navigation, header, summary cards, search controls, and a data grid
+- A reusable "Find People" modal with filters, results preview, and empty-state handling
+
+The implementation is intentionally structured so the visual layer can be iterated independently from the application architecture.
+
+## Tech Stack
+
+- Next.js 16 App Router
+- TypeScript
+- Tailwind CSS v4
+- Lucide React
+
+## Key Decisions
+
+### Server-first composition
+
+The route and most dashboard sections are implemented as Server Components by default. Client boundaries are used only where interaction is required, such as:
+
+- Modal open/close state
+- Accordion filter behavior
+- Sidebar interaction on desktop and mobile
+- Grid toolbar interactions
+
+### Feature-based organization
+
+The codebase is grouped by responsibility instead of by technical layer. This keeps the dashboard, modal, layout, shared primitives, and mock data isolated and easier to maintain.
+
+### Configuration-driven rendering
+
+Several parts of the UI are rendered from data and config files rather than hardcoded JSX:
+
+- Navigation items
+- Grid rows
+- Filter sections
+- Modal preview data
+
+This keeps the assignment scalable and easier to extend without rewriting component structure.
+
+### Reusable primitives
+
+The project includes shared primitives that are reused across the dashboard and modal:
+
+- `Button`
+- `Table`
+- `Modal`
+
+These components are intentionally small and explicit, with minimal abstractions.
+
+## Responsive Behavior
+
+The layout is built for multiple viewports:
+
+- Desktop: full dashboard with sidebar, header, cards, toolbar, grid, and modal overlay
+- Tablet: collapsed sidebar rail and stacked/adjusted content where needed
+- Mobile: hamburger-triggered navigation drawer and stacked modal/body layout
+
+Responsive behavior is kept structural, not decorative.
+
+## Accessibility
+
+Accessibility was treated as a first-class requirement:
+
+- Semantic landmarks and headings
+- Proper button semantics
+- Accessible dialog structure
+- Escape-to-close support for the modal
+- Click-outside-to-close support for the modal
+- Keyboard-friendly accordion controls
+- Form labels and ARIA attributes where appropriate
+
+## Project Structure
+
+```txt
+app/
+  layout.tsx
+  page.tsx
+
+components/
+  layout/
+  dashboard/
+  modal/
+  shared/
+
+data/
+  navigation.ts
+  grid-items.ts
+  filters.ts
+  users.ts
+
+types/
+  navigation.ts
+  grid.ts
+  filters.ts
+  user.ts
+
+lib/
+  utils.ts
+```
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the app at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Available Scripts
 
-## Learn More
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Implementation Notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- The project uses mock data only.
+- No external API integration is required for the assignment.
+- Visual styling is intentionally kept modular so final polish can be adjusted without changing the structure.
+- Tailwind v4 semantic color tokens are defined in `app/globals.css`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Submission Notes
 
-## Deploy on Vercel
+This repository is organized to demonstrate:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Scalable component composition
+- Strong TypeScript usage
+- Reusable UI primitives
+- Responsive layout behavior
+- Accessibility-conscious implementation
+- Maintainable assignment-ready structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
