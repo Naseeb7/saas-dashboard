@@ -71,7 +71,7 @@ function createColumns({
           ) : (
             <span
               aria-hidden="true"
-              className="inline-flex h-8 min-w-[2.5rem] items-center justify-center rounded border border-transparent"
+              className="inline-flex h-8 min-w-10 items-center justify-center rounded border border-transparent"
             />
           )}
           <Button

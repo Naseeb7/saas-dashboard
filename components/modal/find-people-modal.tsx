@@ -69,11 +69,6 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
   const [keywordQuery, setKeywordQuery] = useState("");
   const [filters, setFilters] = useState<FilterState>({});
 
-  const selectedValueCount = Object.values(filters).reduce(
-    (count, value) => count + value.length,
-    0,
-  );
-
   const keyword = keywordQuery.trim().toLowerCase();
 
   const filteredPeople = peopleDirectory.filter((person) => {
@@ -133,11 +128,6 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
       managementLevelMatches
     );
   });
-
-  const showEmptyState =
-    keyword.length > 0 || selectedValueCount > 0
-      ? filteredPeople.length === 0
-      : false;
 
   const toggleMultiSelectValue = (filterId: string, value: string) => {
     setFilters((current) => {

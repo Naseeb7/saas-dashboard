@@ -43,10 +43,7 @@ export function Sidebar({
     >
       <div className="flex h-full w-full flex-col justify-between">
         <div className="flex flex-col">
-          <section
-            aria-label="Logo section"
-            className={"px-5 lg:px-6 py-[15px]"}
-          >
+          <section aria-label="Logo section" className={"px-5 lg:px-6 py-3.75"}>
             <div aria-hidden="true" className={cn("flex items-center")}>
               {collapsed ? (
                 <Image
