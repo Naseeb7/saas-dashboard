@@ -3,7 +3,6 @@
 import type { ChangeEvent } from "react";
 import { LayoutGrid, List, Search } from "lucide-react";
 
-import { Button } from "@/components/shared/button";
 import { cn } from "@/lib/utils";
 
 export type GridTab = "my-grids" | "starred";
@@ -30,7 +29,7 @@ export function GridToolbar({
     <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:px-5 px-3">
       <GridTabs activeTab={activeTab} onTabChange={onTabChange} />
 
-      <div className="flex flex-wrap items-center gap-3 w-1/3 justify-end">
+      <div className="flex flex-wrap items-center gap-6 w-1/3 justify-end">
         <GridSearchField value={searchValue} onChange={onSearchChange} />
         <GridViewToggle
           viewMode={viewMode}

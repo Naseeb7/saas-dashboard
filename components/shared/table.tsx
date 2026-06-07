@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { ArrowUp } from "lucide-react";
 
 export interface TableColumn<T> {
   id: string;
@@ -40,9 +41,16 @@ export function Table<T>({
               <th
                 key={column.id}
                 scope="col"
-                className={cn("border-b px-4 py-3 text-left text-sm", column.className)}
+                className={cn(
+                  "border-b border-border-custom px-4 py-2 text-xs font-medium text-sidebar text-left",
+                  column.className,
+                  column.id === "name" && "pl-20",
+                )}
               >
-                {column.header}
+                <span className="inline-flex items-center gap-2">
+                  {column.header}
+                  {column.id === "name" && <ArrowUp size={12} />}
+                </span>
               </th>
             ))}
           </tr>
@@ -61,19 +69,20 @@ export function Table<T>({
                   {columns.map((column) => (
                     <td
                       key={column.id}
-                      className={cn("border-b px-4 py-3 text-sm", column.className)}
+                      className={cn(
+                        "border-b border-border-custom px-4 py-2 text-xs",
+                        column.className,
+                        expandedRowIds?.includes(getRowKey(row)) &&
+                          "bg-table-bg",
+                      )}
                     >
                       {column.cell(row)}
                     </td>
                   ))}
                 </tr>
-                {expandedRowIds?.includes(getRowKey(row)) && renderExpandedRow ? (
-                  <tr>
-                    <td colSpan={columns.length} className="border-b px-4 py-3 text-sm">
-                      {renderExpandedRow(row)}
-                    </td>
-                  </tr>
-                ) : null}
+                {expandedRowIds?.includes(getRowKey(row)) && renderExpandedRow
+                  ? renderExpandedRow(row)
+                  : null}
               </Fragment>
             ))
           )}

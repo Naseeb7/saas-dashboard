@@ -26,6 +26,8 @@
   --color-icon-bg-dark: #4b5563;
   --color-progress-text-dark: #4b5563;
   --color-check-border: #d1d5dc;
+  --color-table-bg: #f9fafb;
+  --color-starred-border: #fdb022;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

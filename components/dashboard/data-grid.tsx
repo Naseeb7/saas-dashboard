@@ -17,7 +17,7 @@ import {
 
 import { Button } from "@/components/shared/button";
 import { Table, type TableColumn } from "@/components/shared/table";
-import { formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import type { GridItem, GridRowBase, GridSource } from "@/types/grid";
 
 const sourceIcons: Record<GridSource, typeof Link2> = {
@@ -32,7 +32,6 @@ const sourceIcons: Record<GridSource, typeof Link2> = {
 };
 
 interface RowRenderOptions {
-  depth: number;
   expandable: boolean;
   expandedRowId: string | null;
   favoriteMap: Record<string, boolean>;
@@ -41,7 +40,6 @@ interface RowRenderOptions {
 }
 
 function createColumns({
-  depth,
   expandable,
   expandedRowId,
   favoriteMap,
@@ -53,30 +51,52 @@ function createColumns({
       id: "name",
       header: "Name",
       cell: (row) => (
-        <div className="flex items-center gap-3" style={{ paddingLeft: `${depth * 24}px` }}>
+        <div className="flex items-center gap-3">
           {expandable ? (
             <Button
               type="button"
               variant="ghost"
               size="sm"
               onClick={() => onToggleRowExpand(row.id)}
-              aria-label={expandedRowId === row.id ? "Collapse row" : "Expand row"}
+              aria-label={
+                expandedRowId === row.id ? "Collapse row" : "Expand row"
+              }
             >
-              {expandedRowId === row.id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+              {expandedRowId === row.id ? (
+                <ChevronDown size={14} />
+              ) : (
+                <ChevronRight size={14} />
+              )}
             </Button>
           ) : (
-            <span aria-hidden="true" className="inline-flex h-8 w-8" />
+            <span
+              aria-hidden="true"
+              className="inline-flex h-8 min-w-[2.5rem] items-center justify-center rounded border border-transparent"
+            />
           )}
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={() => onToggleFavorite(row.id)}
-            aria-label={favoriteMap[row.id] ? "Remove from starred" : "Add to starred"}
+            aria-label={
+              favoriteMap[row.id] ? "Remove from starred" : "Add to starred"
+            }
           >
-            <Star size={14} aria-hidden="true" />
+            <Star
+              size={14}
+              aria-hidden="true"
+              className={cn(
+                favoriteMap[row.id]
+                  ? "text-starred-border"
+                  : "text-update-muted",
+              )}
+            />
           </Button>
-          <span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded border">
+          <span
+            aria-hidden="true"
+            className="flex h-6 w-6 items-center justify-center rounded-lg border border-surface-muted text-brand shadow-sm"
+          >
             {renderSourceIcon(row.source)}
           </span>
           <span>{row.name}</span>
@@ -88,7 +108,10 @@ function createColumns({
       header: "Edited By",
       cell: (row) => (
         <div className="flex items-center gap-2">
-          <span aria-hidden="true" className="flex h-7 w-7 items-center justify-center rounded-full border text-xs">
+          <span
+            aria-hidden="true"
+            className="flex h-7 w-7 items-center justify-center rounded-lg border text-xs border-surface-muted text-brand shadow-sm"
+          >
             {row.editedBy.initials}
           </span>
           <span>{row.editedBy.name}</span>
@@ -104,7 +127,12 @@ function createColumns({
       id: "actions",
       header: "Actions",
       cell: () => (
-        <Button type="button" variant="ghost" size="sm" aria-label="Open row actions">
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          aria-label="Open row actions"
+        >
           <MoreHorizontal size={14} />
         </Button>
       ),
@@ -136,14 +164,10 @@ export function DataGrid({
   });
 
   return (
-    <section aria-labelledby="grid-heading" className="space-y-4 rounded border p-4">
-      <h2 id="grid-heading" className="sr-only">
-        Dashboard data grid
-      </h2>
+    <section aria-labelledby="grid-heading" className="px-4 py-2">
       <Table
         caption="Dashboard data grid"
         columns={createColumns({
-          depth: 0,
           expandable: true,
           expandedRowId,
           favoriteMap,
@@ -155,25 +179,26 @@ export function DataGrid({
         emptyState="No grids match the current view."
         expandedRowIds={expandedRows}
         renderExpandedRow={(row) =>
-          row.children?.length ? (
-            <div className="pl-8">
-              <Table
-                caption={`${row.name} child grids`}
-                columns={createColumns({
-                  depth: 1,
-                  expandable: false,
-                  expandedRowId: null,
-                  favoriteMap,
-                  onToggleRowExpand,
-                  onToggleFavorite,
-                })}
-                rows={row.children}
-                getRowKey={(childRow) => childRow.id}
-                emptyState="No nested grids available."
-                hideHeader
-              />
-            </div>
-          ) : null
+          row.children?.length
+            ? row.children.map((childRow) => (
+                <tr key={childRow.id}>
+                  {createColumns({
+                    expandable: false,
+                    expandedRowId: null,
+                    favoriteMap,
+                    onToggleRowExpand,
+                    onToggleFavorite,
+                  }).map((column) => (
+                    <td
+                      key={column.id}
+                      className="border-b border-border-custom px-4 py-2 text-xs bg-table-bg"
+                    >
+                      {column.cell(childRow)}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            : null
         }
       />
     </section>
