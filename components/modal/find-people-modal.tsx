@@ -145,28 +145,28 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
 
   return (
     <Modal open={open} onOpenChange={onOpenChange} title="Find People">
-      <div className="flex h-full min-h-0 flex-1 flex-col gap-6 overflow-hidden">
-        <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-hidden lg:flex-row">
+      <div className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden">
+        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden lg:flex-row">
           <aside className="flex h-full min-h-0 w-full flex-col overflow-y-auto lg:w-1/3">
-            <header className="flex w-full justify-between text-modal-header sticky top-0 bg-surface">
+            <header className="sticky top-0 flex w-full justify-between bg-surface text-modal-header">
               <h2 className="text-lg font-extrabold ">Find People</h2>
-              <span className="flex gap-1 py-0.5 px-2.5 bg-surface-muted rounded-md items-center">
-                <ChevronDown size={14} />{" "}
+              <span className="flex items-center gap-1 rounded-md bg-surface-muted px-2.5 py-0.5">
+                <ChevronDown size={14} />
                 <span className="text-xs font-medium">Saved Search</span>
               </span>
             </header>
             <section
               aria-labelledby="keyword-heading"
-              className="flex flex-col gap-1 mt-6 py-4 border-b border-border-custom"
+              className="mt-4 flex flex-col gap-1 border-b border-border-custom py-3"
             >
               <h3
                 id="keyword-heading"
-                className="font-bold text-modal-header flex gap-2 items-center"
+                className="flex items-center gap-2 font-bold text-modal-header"
               >
                 <UserIcon size={16} />
                 People Keyword
               </h3>
-              <label className="flex items-center gap-2 border-b-2 border-modal-search-border py-3">
+              <label className="flex items-center gap-2 border-b-2 border-modal-search-border py-2.5">
                 <Search size={16} aria-hidden="true" />
                 <span className="sr-only">Search keyword</span>
                 <input
@@ -204,17 +204,17 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
             className="flex h-full min-h-0 w-full self-stretch flex-col overflow-hidden lg:w-2/3"
           >
             <div className="flex h-full min-h-0 flex-1 flex-col gap-2">
-              <header className="flex justify-between flex-col gap-1">
-                <div className="flex self-end px-3 py-1 gap-1.5 bg-modal-plan-bg text-modal-plan-text text-xs font-medium items-center rounded-2xl">
+              <header className="flex flex-col justify-between gap-1">
+                <div className="flex self-end items-center gap-1.5 rounded-2xl bg-modal-plan-bg px-3 py-1 text-xs font-medium text-modal-plan-text">
                   <Search size={12.8} />
                   {usedCredits}/{totalCredits}
                 </div>
-                <div className="flex justify-between text-xs">
+                <div className="flex md:justify-between text-xs flex-col-reverse md:flex-row gap-2">
                   <span className="font-medium text-icon-bg-dark">
                     Found {filteredPeople.length} results. Click preview to view
                     results
                   </span>
-                  <span className="font-bold text-warning-text flex items-center gap-1">
+                  <span className="font-bold text-warning-text flex items-center gap-1 self-end">
                     <Unlock size={16} />
                     Unlock 100,000 leads with Enterprise Plan*
                   </span>
@@ -238,7 +238,7 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
           </section>
         </div>
 
-        <footer className="flex w-full flex-col flex-wrap items-stretch gap-4 lg:w-1/3 lg:flex-row lg:items-center">
+        <footer className="flex w-full flex-col flex-wrap items-stretch gap-3 lg:w-1/3 lg:flex-row lg:items-center">
           <Button
             type="button"
             variant="primary"

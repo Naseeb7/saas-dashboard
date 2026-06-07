@@ -70,7 +70,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="relative flex h-[calc(100vh-1rem)] w-[calc(100vw-1rem)] max-w-none flex-col overflow-hidden rounded-none border border-border-custom bg-surface px-4 pt-4 pb-4 shadow-sm shadow-black/8 sm:h-[min(92vh,calc(100vh-2rem))] sm:w-full sm:rounded-lg sm:px-8 sm:pt-8 sm:pb-4.5 sm:max-w-5xl"
+          className="relative flex h-[calc(100vh-1rem)] w-[calc(100vw-1rem)] max-w-none flex-col overflow-hidden rounded-2xl border border-border-custom bg-surface px-4 pt-8 pb-4 shadow-sm shadow-black/8 sm:h-[min(92vh,calc(100vh-2rem))] sm:w-full sm:rounded-lg sm:px-8 sm:pt-8 sm:pb-4.5 sm:max-w-5xl"
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
@@ -83,7 +83,7 @@ export function Modal({ open, onOpenChange, title, children }: ModalProps) {
             type="button"
             onClick={() => onOpenChange(false)}
             aria-label="Close dialog"
-            className="absolute top-3 right-3 rounded-full p-1 bg-border-custom flex justify-center items-center hover:cursor-pointer"
+            className="absolute right-2 top-2 flex items-center justify-center rounded-full bg-border-custom p-1 hover:cursor-pointer sm:right-3 sm:top-3"
           >
             <X size={12} />
           </button>
