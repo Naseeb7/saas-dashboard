@@ -74,10 +74,7 @@ export function Accordion<T>({
                 <ChevronDown
                   aria-hidden="true"
                   size={16}
-                  className={cn(
-                    "shrink-0 transition-transform",
-                    isOpen && "rotate-180",
-                  )}
+                  className={cn("shrink-0", isOpen && "rotate-180")}
                 />
               </button>
             </h3>

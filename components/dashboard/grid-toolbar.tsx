@@ -52,7 +52,7 @@ function GridTabs({
           onClick={() => onTabChange("my-grids")}
           aria-pressed={activeTab === "my-grids"}
           className={cn(
-            "font-medium transition-colors duration-200 border-border-custom pb-3 px-2",
+            "font-medium border-border-custom pb-3 px-2",
             activeTab === "my-grids"
               ? "text-brand border-b border-brand"
               : "text-muted",
@@ -65,7 +65,7 @@ function GridTabs({
           onClick={() => onTabChange("starred")}
           aria-pressed={activeTab === "starred"}
           className={cn(
-            "font-medium transition-colors duration-200 border-border-custom pb-3 px-2",
+            "font-medium border-border-custom pb-3 px-2",
             activeTab === "starred"
               ? "text-brand border-b border-brand"
               : "text-muted",

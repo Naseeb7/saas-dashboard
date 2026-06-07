@@ -44,7 +44,7 @@ export function AppShell({ children }: AppShellProps) {
       <div
         className={cn(
           "mx-auto grid min-h-screen max-w-screen-2xl",
-          "md:grid-cols-[88px_minmax(0,1fr)] xl:transition-[grid-template-columns] xl:duration-300 xl:ease-in-out",
+          "md:grid-cols-[88px_minmax(0,1fr)]",
           isDesktopExpandable && !isSidebarCollapsed
             ? "xl:grid-cols-[280px_minmax(0,1fr)]"
             : "xl:grid-cols-[88px_minmax(0,1fr)]",

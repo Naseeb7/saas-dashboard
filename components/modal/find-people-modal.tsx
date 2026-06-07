@@ -311,7 +311,7 @@ function FilterOptions({
               className="sr-only peer"
             />
             <span
-              className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
+              className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
                 isChecked
                   ? "border-brand bg-brand"
                   : "border-border-custom bg-transparent"
