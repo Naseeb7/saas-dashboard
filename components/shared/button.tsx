@@ -62,7 +62,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading ? <span aria-hidden="true">...</span> : leftIcon}
-        <span>{children}</span>
+        {children && <span>{children}</span>}
         {rightIcon}
       </button>
     );
