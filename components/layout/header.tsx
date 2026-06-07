@@ -5,7 +5,7 @@ export function Header() {
   return (
     <header
       aria-label="Dashboard header"
-      className="border-b border-black/8 px-5 py-2.75 flex items-center justify-end"
+      className="border-b border-black/8 px-5 py-3 flex items-center justify-end"
     >
       <div className="flex gap-4 items-center w-full justify-end">
         <div className="flex items-center justify-between px-2 py-1 bg-success-bg text-success-text rounded-[10.5px] gap-4 opacity-90">

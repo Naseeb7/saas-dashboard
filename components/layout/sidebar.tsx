@@ -45,7 +45,7 @@ export function Sidebar({
         <div className="flex flex-col">
           <section
             aria-label="Logo section"
-            className={"px-5 lg:px-6 py-[16.5px]"}
+            className={"px-5 lg:px-6 py-[15px]"}
           >
             <div aria-hidden="true" className={cn("flex items-center")}>
               {collapsed ? (
@@ -255,7 +255,9 @@ function SidebarNavLink({
         <Icon size={16} className="text-muted" />
         {!collapsed && <span className="truncate">{label}</span>}
       </div>
-      {!collapsed && active && <ChevronRight size={16} className="text-brand" />}
+      {!collapsed && active && (
+        <ChevronRight size={16} className="text-brand" />
+      )}
       {!collapsed && trailingIcon ? (
         <span
           aria-hidden="true"
