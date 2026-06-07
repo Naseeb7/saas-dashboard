@@ -19,6 +19,8 @@ interface TableProps<T> {
   hideHeader?: boolean;
   expandedRowIds?: string[];
   renderExpandedRow?: (row: T) => ReactNode;
+  modifyName?: boolean;
+  headerClassname?: string;
 }
 
 export function Table<T>({
@@ -30,62 +32,65 @@ export function Table<T>({
   hideHeader = false,
   expandedRowIds,
   renderExpandedRow,
+  modifyName = true,
+  headerClassname = "",
 }: TableProps<T>) {
+  if (rows.length === 0) {
+    return (
+      <div className="flex h-full min-h-0 items-center justify-center overflow-auto">
+        <div className="px-4 py-6 text-sm">
+          {emptyState ?? "No records available."}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-auto flex-1 shadow-[0_10px_20px_-12px_rgba(0,0,0,0.1)]">
       <table className="min-w-full border-collapse">
         {caption ? <caption className="sr-only">{caption}</caption> : null}
         <thead className={hideHeader ? "sr-only" : undefined}>
-          <tr>
+          <tr className={headerClassname}>
             {columns.map((column) => (
               <th
                 key={column.id}
                 scope="col"
                 className={cn(
-                  "border-b border-border-custom px-4 py-2 text-xs font-medium text-sidebar text-left",
+                  "border-b border-border-custom px-4 py-2 text-xs font-medium text-sidebar text-left min-w-30 whitespace-nowrap",
                   column.className,
-                  column.id === "name" && "pl-20",
+                  column.id === "name" && modifyName && "pl-20",
                 )}
               >
                 <span className="inline-flex items-center gap-2">
                   {column.header}
-                  {column.id === "name" && <ArrowUp size={12} />}
+                  {column.id === "name" && modifyName && <ArrowUp size={12} />}
                 </span>
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {rows.length === 0 ? (
-            <tr>
-              <td colSpan={columns.length} className="px-4 py-6 text-sm">
-                {emptyState ?? "No records available."}
-              </td>
-            </tr>
-          ) : (
-            rows.map((row) => (
-              <Fragment key={getRowKey(row)}>
-                <tr>
-                  {columns.map((column) => (
-                    <td
-                      key={column.id}
-                      className={cn(
-                        "border-b border-border-custom px-4 py-2 text-xs",
-                        column.className,
-                        expandedRowIds?.includes(getRowKey(row)) &&
-                          "bg-table-bg",
-                      )}
-                    >
-                      {column.cell(row)}
-                    </td>
-                  ))}
-                </tr>
-                {expandedRowIds?.includes(getRowKey(row)) && renderExpandedRow
-                  ? renderExpandedRow(row)
-                  : null}
-              </Fragment>
-            ))
-          )}
+          {rows.map((row) => (
+            <Fragment key={getRowKey(row)}>
+              <tr>
+                {columns.map((column) => (
+                  <td
+                    key={column.id}
+                    className={cn(
+                      "border-b border-border-custom px-4 py-2 text-xs min-w-30 whitespace-nowrap",
+                      column.className,
+                      expandedRowIds?.includes(getRowKey(row)) && "bg-table-bg",
+                    )}
+                  >
+                    {column.cell(row)}
+                  </td>
+                ))}
+              </tr>
+              {expandedRowIds?.includes(getRowKey(row)) && renderExpandedRow
+                ? renderExpandedRow(row)
+                : null}
+            </Fragment>
+          ))}
         </tbody>
       </table>
     </div>

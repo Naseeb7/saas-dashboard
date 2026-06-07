@@ -17,7 +17,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "border border-border-custom bg-transparent text-sidebar-dark",
+  primary: "border border-border-custom text-sidebar-dark",
   secondary: "bg-sidebar text-surface",
   ghost: "border-transparent",
 };

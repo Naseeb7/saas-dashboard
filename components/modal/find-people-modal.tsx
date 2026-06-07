@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ChevronDown, Search, User as UserIcon } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  Eye,
+  FileSearchCorner,
+  Search,
+  Unlock,
+  User as UserIcon,
+} from "lucide-react";
 
 import { Accordion } from "@/components/modal/accordion";
 import { Modal } from "@/components/modal/modal";
@@ -11,6 +19,7 @@ import { filterSections } from "@/data/filters";
 import { peopleDirectory } from "@/data/users";
 import type { FilterConfig, FilterSection } from "@/types/filters";
 import type { User } from "@/types/user";
+import Image from "next/image";
 
 type FilterValue = string[];
 type FilterState = Record<string, FilterValue>;
@@ -148,7 +157,7 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
     <Modal open={open} onOpenChange={onOpenChange} title="Find People">
       <div className="flex h-full min-h-0 flex-1 flex-col gap-6 overflow-hidden">
         <div className="flex min-h-0 flex-1 gap-5 overflow-hidden">
-          <aside className="flex h-full min-h-0 w-2/5 flex-col overflow-y-auto">
+          <aside className="flex h-full min-h-0 w-1/3 flex-col overflow-y-auto">
             <header className="flex w-full justify-between text-modal-header sticky top-0 bg-surface">
               <h2 className="text-lg font-extrabold ">Find People</h2>
               <span className="flex gap-1 py-0.5 px-2.5 bg-surface-muted rounded-md items-center">
@@ -202,57 +211,84 @@ export function FindPeopleModal({ open, onOpenChange }: FindPeopleModalProps) {
 
           <section
             aria-labelledby="preview-heading"
-            className="flex h-full min-h-0 w-3/5 self-stretch flex-col overflow-hidden"
+            className="flex h-full min-h-0 w-2/3 self-stretch flex-col overflow-hidden"
           >
-            <div className="flex h-full min-h-0 flex-1 flex-col pl-2">
-              <header className="flex shrink-0 flex-wrap items-start justify-between gap-3 rounded border p-4">
-                <div>
-                  <h3 id="preview-heading" className="text-sm font-medium">
-                    Preview
-                  </h3>
-                  <p className="text-sm">
-                    Results table area for the current filter combination.
-                  </p>
+            <div className="flex h-full min-h-0 flex-1 flex-col gap-2">
+              <header className="flex justify-between flex-col gap-1">
+                <div className="flex self-end px-3 py-1 gap-1.5 bg-modal-plan-bg text-modal-plan-text text-xs font-medium items-center rounded-2xl">
+                  <Search size={12.8} />
+                  {usedCredits}/{totalCredits}
                 </div>
-                <p className="text-sm" aria-label="results count">
-                  {filteredPeople.length} results
-                </p>
+                <div className="flex justify-between text-xs">
+                  <span className="font-medium text-icon-bg-dark">
+                    Found {filteredPeople.length} results. Click preview to view
+                    results
+                  </span>
+                  <span className="font-bold text-warning-text flex items-center gap-1">
+                    <Unlock size={16} />
+                    Unlock 100,000 leads with Enterprise Plan*
+                  </span>
+                </div>
               </header>
 
-              {showEmptyState ? (
-                <div className="flex min-h-0 flex-1 items-center justify-center overflow-auto border p-6">
-                  <div className="text-center">
-                    <div
-                      aria-hidden="true"
-                      className="mx-auto mb-4 h-16 w-16 rounded border"
-                    />
-                    <p className="text-sm">No matching users.</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex min-h-0 flex-1 flex-col overflow-auto">
+              <div className="flex min-h-0 flex-1 flex-col overflow-hidden pr-2 pb-2">
+                <div className="flex min-h-0 flex-1 flex-col overflow-auto rounded-t-lg bg-surface inset-shadow-sm inset-shadow-black/10">
                   <Table
                     caption="Filtered people results"
                     columns={previewColumns}
                     rows={filteredPeople}
                     getRowKey={(person) => person.id}
+                    modifyName={false}
+                    headerClassname="bg-table-bg"
+                    emptyState={<EmptyState />}
                   />
                 </div>
-              )}
+              </div>
             </div>
           </section>
         </div>
 
-        <footer className="flex flex-wrap items-center gap-3">
-          <Button type="button" variant="secondary" size="md">
+        <footer className="flex flex-wrap items-center gap-4 w-1/3">
+          <Button
+            type="button"
+            variant="primary"
+            className="w-full md:w-2/5 bg-border-custom text-sidebar"
+            leftIcon={<FileSearchCorner size={16} />}
+          >
             Save Search
           </Button>
-          <Button type="button" variant="primary" size="md">
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full md:w-1/2"
+            leftIcon={<Eye size={16} className="text-surface" />}
+          >
             Preview Result
           </Button>
         </footer>
       </div>
     </Modal>
+  );
+}
+
+function EmptyState() {
+  return (
+    <div className="flex justify-center items-center flex-col gap-5">
+      <Image
+        src={"/images/shared/emptyResult.webp"}
+        alt="No Results"
+        height={135}
+        width={188}
+      />
+      <div className="flex flex-col gap-0.5 text-xs font-medium text-update-muted text-center w-2/3">
+        <span>
+          Start your Company search , preview, and import companies for
+          enrichment by applying any filter in the left panel.
+        </span>
+        <span>OR</span>
+        <span>Import companies from saved Search. </span>
+      </div>
+    </div>
   );
 }
 

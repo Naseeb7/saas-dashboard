@@ -30,6 +30,8 @@
   --color-starred-border: #fdb022;
   --color-modal-header: #111928;
   --color-modal-search-border: #d1d5db;
+  --color-modal-plan-bg: #fbecdd;
+  --color-modal-plan-text: #d9730e;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
